@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:subway_congestion/screen/main_screen.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
+import '../screen/home_screen.dart';
 import '../utils/showSnackbar.dart';
 import '../utils/showOtpDialog.dart';
 
@@ -43,9 +45,9 @@ class FirebaseAuthMethods {
     } on FirebaseAuthException catch (e) {
       // if you want to display your own custom error message
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        print('비밀번호가 너무 짧아요!');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        print('해당 계정은 이미 생성된 계정입니다.');
       }
       showSnackBar(
           context, e.message!); // Displaying the usual firebase error message
@@ -68,8 +70,11 @@ class FirebaseAuthMethods {
         // restrict access to certain things using provider
         // transition to another page instead of home screen
       }
+      else {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+      }
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message!); // Displaying the error message
+      showSnackBar(context, '입력값을 확인해주세요!'); // Displaying the error message
     }
   }
 
@@ -77,7 +82,7 @@ class FirebaseAuthMethods {
   Future<void> sendEmailVerification(BuildContext context) async {
     try {
       _auth.currentUser!.sendEmailVerification();
-      showSnackBar(context, 'Email verification sent!');
+      showSnackBar(context, '이메일을 통해 인증해주세요!');
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!); // Display error message
     }

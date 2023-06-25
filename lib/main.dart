@@ -131,6 +131,7 @@ import 'package:subway_congestion/firebase_options.dart';
 import 'package:subway_congestion/screen/home_screen.dart';
 import 'package:subway_congestion/screen/login_email_password_screen.dart';
 import 'package:subway_congestion/screen/login_screen.dart';
+import 'package:subway_congestion/screen/main_screen.dart';
 import 'package:subway_congestion/screen/signup_email_password_screen.dart';
 import 'package:subway_congestion/services/firebase_auth_methods.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -171,15 +172,15 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Firebase Auth Demo',
+        title: '지옥철 혼잡도',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         home: const AuthWrapper(),
         routes: {
-          EmailPasswordSignup.routeName: (context) =>
-          const EmailPasswordSignup(),
+          EmailPasswordSignup.routeName: (context) => const EmailPasswordSignup(),
           EmailPasswordLogin.routeName: (context) => const EmailPasswordLogin(),
+          // HomeScreen.routeName: (context) => const HomeScreen(),
           // PhoneScreen.routeName: (context) => const PhoneScreen(),
         },
       ),

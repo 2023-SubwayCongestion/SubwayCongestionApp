@@ -24,13 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
               onTap: () {
                 Navigator.pushNamed(context, EmailPasswordSignup.routeName);
               },
-              text: 'Email/Password Sign Up',
+              text: '회원가입하기',
             ),
             CustomButton(
               onTap: () {
                 Navigator.pushNamed(context, EmailPasswordLogin.routeName);
               },
-              text: 'Email/Password Login',
+              text: '로그인하기',
             ),
             // CustomButton(
             //     onTap: () {

@@ -30,7 +30,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            "Login",
+            "로그인",
             style: TextStyle(fontSize: 30),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.08),
@@ -38,7 +38,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomTextField(
               controller: emailController,
-              hintText: 'Enter your email',
+              hintText: '이메일을 입력해주세요.',
             ),
           ),
           const SizedBox(height: 20),
@@ -46,7 +46,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomTextField(
               controller: passwordController,
-              hintText: 'Enter your password',
+              hintText: '비밀번호를 입력해주세요.',
             ),
           ),
           const SizedBox(height: 40),
@@ -62,7 +62,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
               ),
             ),
             child: const Text(
-              "Login",
+              "확인",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),

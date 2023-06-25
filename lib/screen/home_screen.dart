@@ -3,52 +3,66 @@ import 'package:subway_congestion/services/firebase_auth_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widget/bottom_bar.dart';
 import '../widget/custom_button.dart';
+import 'mypage_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  static const List<Widget> _widgetOptions = <Widget>[
+    // ocr(),
+    // RecipeScreen(),
+    // showGroupBuying(),
+    // showMyChat(),
+    UserPage(),
+    UserPage(),
+    UserPage(),
+    UserPage(),
+    UserPage(),
+    // TownScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final user = context.read<FirebaseAuthMethods>().user;
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // when user signs anonymously or with phone, there is no email
-          if (!user.isAnonymous && user.phoneNumber == null) Text(user.email!),
-          if (!user.isAnonymous && user.phoneNumber == null)
-            Text(user.providerData[0].providerId),
-          // display phone number only when user's phone number is not null
-          if (user.phoneNumber != null) Text(user.phoneNumber!),
-          // uid is always available for every sign in method
-          Text(user.uid),
-          // display the button only when the user email is not verified
-          // or isnt an anonymous user
-          if (!user.emailVerified && !user.isAnonymous)
-            CustomButton(
-              onTap: () {
-                context
-                    .read<FirebaseAuthMethods>()
-                    .sendEmailVerification(context);
-              },
-              text: 'Verify Email',
-            ),
-          CustomButton(
-            onTap: () {
-              context.read<FirebaseAuthMethods>().signOut(context);
-            },
-            text: 'Sign Out',
-          ),
-          CustomButton(
-            onTap: () {
-              context.read<FirebaseAuthMethods>().deleteAccount(context);
-            },
-            text: 'Delete Account',
-          ),
-        ],
+      // body: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     // 이하 코드 생략...
+      //
+      //     CustomButton(
+      //       onTap: () {
+      //         context.read<FirebaseAuthMethods>().signOut(context);
+      //       },
+      //       text: 'Sign out',
+      //     ),
+      //     CustomButton(
+      //       onTap: () {
+      //         context.read<FirebaseAuthMethods>().deleteAccount(context);
+      //       },
+      //       text: 'Delete Account',
+      //     ),
+      //   ],
+      // ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
+      bottomNavigationBar: BottomBar(_selectedIndex, _onItemTapped),
     );
   }
 }
