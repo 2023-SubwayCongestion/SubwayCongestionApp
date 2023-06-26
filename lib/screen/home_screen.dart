@@ -1,3 +1,4 @@
+import 'package:subway_congestion/screen/subwayLine_screen.dart';
 import 'package:subway_congestion/services/firebase_auth_methods.dart';
 
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // RecipeScreen(),
     // showGroupBuying(),
     // showMyChat(),
-    UserPage(),
+    SubwayLine(),
     UserPage(),
     UserPage(),
     UserPage(),

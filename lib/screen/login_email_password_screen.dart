@@ -27,6 +27,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -37,13 +38,17 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
           Center(
             child: Column(
               children: [
+                SizedBox(
+                  height: 100,
+                ),
                 CustomImage(
                   filename: 'assets/login.png',
-                  widthPercent: 0.5,
-                  heightPercent: 0.5,
+                  widthPercent: 0.7,
+                  heightPercent: 0.4,
                 ),
                 // SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
                   // margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
                     controller: emailController,
@@ -53,6 +58,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
                 ),
                 const SizedBox(height: 20),
                 Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
                   // margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
                     controller: passwordController,
@@ -61,20 +67,23 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: loginUser,
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color.fromRGBO(84, 162, 154, 1)),
-                    textStyle: MaterialStateProperty.all(
-                      const TextStyle(color: Colors.white),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: ElevatedButton(
+                    onPressed: loginUser,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Color.fromRGBO(84, 162, 154, 1)),
+                      textStyle: MaterialStateProperty.all(
+                        const TextStyle(color: Colors.white),
+                      ),
+                      minimumSize: MaterialStateProperty.all(
+                        Size(MediaQuery.of(context).size.width / 2.5, 50),
+                      ),
                     ),
-                    minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width / 2.5, 50),
+                    child: const Text(
+                      "확인",
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  child: const Text(
-                    "확인",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ],

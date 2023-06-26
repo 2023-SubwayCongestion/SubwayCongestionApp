@@ -29,13 +29,16 @@ class _LoginScreenState extends State<LoginScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 100,
+                ),
                 CustomImage(
                   filename: 'assets/logo.png',
-                  widthPercent: 0.5,
-                  heightPercent: 0.5,
+                  widthPercent: 0.7,
+                  heightPercent: 0.4,
                 ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 50),
+                SizedBox(
+                  height: 50,
                 ),
                 CustomButton(
                   onTap: () {
@@ -46,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   tx_color: Colors.black,
                 ),
                 Container(
-                  padding: EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.only(bottom: 15),
                 ),
                 CustomOutlinedButton(
                   onTap: () {

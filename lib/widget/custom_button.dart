@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     // 버튼 크기를 화면 크기의 일정 비율로 설정하기
-    final buttonWidth = screenWidth * 0.5; // 화면 폭의 90%로 버튼 폭 설정
+    final buttonWidth = screenWidth * 0.6; // 화면 폭의 90%로 버튼 폭 설정
     final buttonHeight = screenHeight * 0.05; // 화면 높이의 10%로 버튼 높이 설정
 
     return SizedBox(
@@ -68,7 +68,7 @@ class CustomOutlinedButton extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     // 버튼 크기를 화면 크기의 일정 비율로 설정하기
-    final buttonWidth = screenWidth * 0.5; // 화면 폭의 90%로 버튼 폭 설정
+    final buttonWidth = screenWidth * 0.6; // 화면 폭의 90%로 버튼 폭 설정
     final buttonHeight = screenHeight * 0.05; // 화면 높이의 10%로 버튼 높이 설정
 
     return SizedBox(
