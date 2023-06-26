@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final bool isObscure;
 
   const CustomTextField({
     Key? key,
     required this.controller,
     required this.hintText,
+    required this.isObscure,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        obscureText: isObscure, // 이 속성을 추가합니다.
         controller: controller,
         decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -48,6 +51,7 @@ class CustomTextField extends StatelessWidget {
           filled: true,
           fillColor: const Color(0xffF5F6FA),
           hintText: hintText,
+
           hintStyle: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,

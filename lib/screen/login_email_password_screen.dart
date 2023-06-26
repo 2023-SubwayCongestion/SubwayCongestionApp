@@ -48,6 +48,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
                   child: CustomTextField(
                     controller: emailController,
                     hintText: '이메일을 입력해주세요.',
+                    isObscure: false,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -56,6 +57,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
                   child: CustomTextField(
                     controller: passwordController,
                     hintText: '비밀번호를 입력해주세요.',
+                    isObscure: true,
                   ),
                 ),
                 const SizedBox(height: 40),
