@@ -1,3 +1,4 @@
+import 'package:subway_congestion/screen/subway_station_screen.dart';
 import 'package:subway_congestion/services/firebase_auth_methods.dart';
 
 import 'package:flutter/material.dart';
@@ -23,16 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
   static const List<Widget> _widgetOptions = <Widget>[
-    // ocr(),
-    // RecipeScreen(),
-    // showGroupBuying(),
-    // showMyChat(),
+    SubwayStationPage(),
     UserPage(),
     UserPage(),
     UserPage(),
     UserPage(),
-    UserPage(),
-    // TownScreen(),
   ];
 
   @override
