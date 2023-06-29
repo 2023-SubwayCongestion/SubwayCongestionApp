@@ -36,6 +36,16 @@ class _DetailScreenState extends State<DetailScreen> {
   });
 
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.direction1 == 'None'){
+      _selectedWidgetIndex = 1;
+    }
+  }
+
+
   // 두 위젯 중 하나를 반환하는 메서드
   Widget _getDisplayWidget() {
     switch (_selectedWidgetIndex) {
@@ -46,7 +56,7 @@ class _DetailScreenState extends State<DetailScreen> {
         // return Text('두 번째 위젯');
         return CongestionView(info: realTimeinfo2,);
       default:
-        return Text('첫 번째 위젯');
+        return Text('다른 방면 선택해주세요!');
     }
   }
 
@@ -103,7 +113,10 @@ class _DetailScreenState extends State<DetailScreen> {
                         children: [
                           TextButton(
                               onPressed: () {
-                                setState(() { _selectedWidgetIndex = 0;});
+                                setState(() {
+                                  if(widget.direction1 == 'None')  _selectedWidgetIndex = -1;
+                                  else _selectedWidgetIndex = 0;
+                                });
                                 },
                               child: Text(
                                 "● ${widget.direction1}", style: TextStyle(
@@ -114,7 +127,10 @@ class _DetailScreenState extends State<DetailScreen> {
 
                           TextButton(
                               onPressed: () {
-                                setState(() { _selectedWidgetIndex = 1;});
+                                setState(() {
+                                  if(widget.direction2 == 'None')  _selectedWidgetIndex = -1;
+                                  else _selectedWidgetIndex = 1;
+                                });
                               },
                               child: Text(
                                 "● ${widget.direction2}", style: TextStyle(
