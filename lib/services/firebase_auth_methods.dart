@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:subway_congestion/screen/main_screen.dart';
+import 'package:subway_congestion/screen/subwayLine_screen.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
@@ -71,7 +71,7 @@ class FirebaseAuthMethods {
         // transition to another page instead of home screen
       }
       else {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SubwayLine()));
       }
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, '입력값을 확인해주세요!'); // Displaying the error message

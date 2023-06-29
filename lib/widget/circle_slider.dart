@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:subway_congestion/screen/detail_screen.dart';
 
 class CircleList extends StatelessWidget {
   final List<String> subWayList;
@@ -19,12 +20,16 @@ List<Widget> makeCircleImages(BuildContext context, List<String> list) {
     results.add(
       InkWell(
         onTap: (){
-          // Navigator.of(context).push(MaterialPageRoute<Null>(
-          //     fullscreenDialog: true,
-          //     builder: (BuildContext content){
-          //       return DetailScreen(list: list[i]);
-          //     }
-          // ));
+          Navigator.of(context).push(MaterialPageRoute<Null>(
+              fullscreenDialog: true,
+              builder: (BuildContext content){
+                return DetailScreen(
+                  subwayName: list[i],
+                  direction1: ((i - 1) >= 0) ? list[i - 1] : 'None',
+                  direction2: ((i + 1) < list.length) ? list[i + 1] : 'None',
+                );
+              }
+          ));
         },
         child: Row(
           children: [

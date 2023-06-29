@@ -131,7 +131,6 @@ import 'package:subway_congestion/firebase_options.dart';
 import 'package:subway_congestion/screen/home_screen.dart';
 import 'package:subway_congestion/screen/login_email_password_screen.dart';
 import 'package:subway_congestion/screen/login_screen.dart';
-import 'package:subway_congestion/screen/main_screen.dart';
 import 'package:subway_congestion/screen/signup_email_password_screen.dart';
 import 'package:subway_congestion/services/firebase_auth_methods.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -10,18 +10,15 @@ class SubwayLine extends StatefulWidget {
 
 class _SubwayLineState extends State<SubwayLine> {
   List<String> SubwayList = [
-    '강현우',
-    '김민균',
-    '홍연주',
-    '김유연',
-    '정혜령',
-    '세글자보다많다',
-    '그리고',
-    '뛰어쓰긴란없다',
-    '동국대',
-    '연세대',
-    '동연전',
-    '마지막인데선이없다',
+    '충무로역',
+    '동대문역사문화공원역',
+    '동대문역',
+    '혜화역',
+    '한성대입구역',
+    '성신여대역',
+    '길음역',
+    '미아사거리역',
+    '미아역',
   ];
 
   @override
