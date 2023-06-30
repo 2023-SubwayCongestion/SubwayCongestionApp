@@ -110,38 +110,3 @@ class _SubwayLineState extends State<SubwayLine> {
     );
   }
 }
-
-class TopBar extends StatelessWidget {
-  const TopBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.line_weight,
-                color: Color.fromRGBO(84, 162, 154, 1),
-              )),
-          Text(
-            'MAP',
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color.fromRGBO(84, 162, 154, 1)),
-          ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.line_weight,
-                color: Color.fromRGBO(84, 162, 154, 1),
-              )),
-        ],
-      ),
-    );
-  }
-}
