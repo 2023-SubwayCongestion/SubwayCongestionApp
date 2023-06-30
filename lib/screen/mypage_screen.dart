@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import '../services/firebase_auth_methods.dart';
+import '../widget/custom_button.dart';
 import 'home_screen.dart';
 
 
@@ -27,7 +29,25 @@ class _UserPage extends State<UserPage> {
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
       ),
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // 이하 코드 생략...
 
+        CustomButton(
+          onTap: () {
+            context.read<FirebaseAuthMethods>().signOut(context);
+          },
+          text: 'Sign out',bg_color: Color.fromRGBO(0, 0, 0, 1),tx_color: Color.fromRGBO(255, 255, 255, 1),
+        ),
+        CustomButton(
+          onTap: () {
+            context.read<FirebaseAuthMethods>().deleteAccount(context);
+          },
+          text: 'Delete Account', bg_color: Color.fromRGBO(0, 0, 0, 1),tx_color: Color.fromRGBO(255, 255, 255, 1),
+        ),
+      ],
+    ),
 
 
     );

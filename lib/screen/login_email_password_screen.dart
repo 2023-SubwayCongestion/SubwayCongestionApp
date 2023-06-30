@@ -4,6 +4,8 @@ import 'package:subway_congestion/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../header.dart';
+
 class EmailPasswordLogin extends StatefulWidget {
   static String routeName = '/login-email-password';
   const EmailPasswordLogin({Key? key}) : super(key: key);
@@ -27,6 +29,22 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: getColor('main2'),
+        elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 30,
+          ),
+          color: getColor('main1'),
+          // X 버튼의 색상을 변경합니다. 원하는 색상으로 변경하세요.
+          onPressed: () {
+            Navigator.of(context).pop(); // 뒤로 가기 버튼과 동일한 동작을 수행합니다.
+          },
+        ),
+
+      ),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -38,9 +56,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
           Center(
             child: Column(
               children: [
-                SizedBox(
-                  height: 100,
-                ),
+
                 CustomImage(
                   filename: 'assets/login.png',
                   widthPercent: 0.7,
