@@ -36,10 +36,10 @@ class _BottomBarState extends State<BottomBar> {
             icon: Icon(Icons.chat_bubble_rounded),
             label: '신고하기',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people_sharp),
-            label: '마이페이지',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.people_sharp),
+          //   label: '마이페이지',
+          // ),
         ],
         currentIndex: widget._selectedIndex,
         selectedItemColor: Color.fromRGBO(245, 243, 228, 1),
