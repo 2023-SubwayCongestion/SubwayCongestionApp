@@ -18,6 +18,7 @@ class CongestionView extends StatelessWidget {
           Text('     ' + info.lastDest + ' ' + info.time),
           SizedBox(height: 10,),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: makeCongeInfo(info.items),
           ),
@@ -36,20 +37,47 @@ List<Widget> makeCongeInfo(List<int> list){
     else if(list[i] == 1) bgColor = Color.fromRGBO(255, 233, 0, 1);
     else bgColor = Color.fromRGBO(255, 116, 116, 1);
 
-    results.add(
-      Container(
-        width: 50,
-        height: 50,
-        color: bgColor,
-        child: Center(
-          child: Text('${i +1}', style: TextStyle(
-            color: Colors.white,
-            fontSize: 35,
-            fontWeight: FontWeight.bold,),
+    if(list[i] == 0){
+      results.add(
+        Column(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              color: bgColor,
+              child: Center(
+                child: Text('${i +1}', style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,),
+                ),
+              ),
+            ),
+            Text('▼ 추천', style: TextStyle(
+              color: bgColor,
+              fontWeight: FontWeight.bold,),
+            ),
+          ],
+        ),
+      );
+    }
+    else{
+      results.add(
+        Container(
+          width: 50,
+          height: 50,
+          color: bgColor,
+          child: Center(
+            child: Text('${i +1}', style: TextStyle(
+              color: Colors.white,
+              fontSize: 35,
+              fontWeight: FontWeight.bold,),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
+
   }
   return results;
 }
