@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "572590140048",
+    "project_id": "subwaycongestion",
+    "storage_bucket": "subwaycongestion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572590140048:android:09279de052cf206603c615",
+        "android_client_info": {
+          "package_name": "com.example.subway_congestion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572590140048-7n4js9eq4t02a806lavcqbl8iso1itcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGfiTr6CyHIZNQ_h1E2MiG8XIpSO2-K0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572590140048-7n4js9eq4t02a806lavcqbl8iso1itcg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "572590140048-dinrchoh4u4si6fssaq4cncu5gh1307t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseAuthDemo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
