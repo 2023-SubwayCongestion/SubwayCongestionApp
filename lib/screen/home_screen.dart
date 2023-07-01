@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // showGroupBuying(),
     // showMyChat(),
     SubwayLine(),
-    UserPage(),
+    // UserPage(),
     SubwayCongestion(),
     UserPage(),
 
