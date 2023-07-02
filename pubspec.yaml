@@ -37,6 +37,7 @@ dependencies:
   syncfusion_flutter_charts: ^22.1.36
   flutter_donation_buttons: ^0.3.7
   fl_chart: ^0.61.0
+  cloud_firestore: ^4.8.2
   flutter:
     sdk: flutter
 

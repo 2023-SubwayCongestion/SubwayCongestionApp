@@ -4,6 +4,8 @@ import 'package:subway_congestion/model/model_congestion.dart';
 import 'package:subway_congestion/widget/congestion_view.dart';
 import 'package:subway_congestion/widget/custom_button.dart';
 
+import 'congestionDetail_screen.dart';
+
 class DetailScreen extends StatefulWidget {
   final String subwayName;
   final String direction1;
@@ -158,6 +160,16 @@ class _DetailScreenState extends State<DetailScreen> {
                   //       return DetailScreen(subwayName: widget.subwayName,);
                   //     }
                   // ));
+                  Navigator.of(context).push(MaterialPageRoute<Null>(
+                      fullscreenDialog: true,
+                      builder: (BuildContext content){
+                        return CongestionDetailScreen(
+                          subwayName: widget.subwayName,
+                          direction1: 'None',
+                          direction2: 'None',
+                        );
+                      }
+                  ));
                 },
                 text: widget.subwayName + ' 혼잡도 보기',
                 bg_color: Color.fromRGBO(84, 162, 154, 1),
