@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:subway_congestion/header.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:subway_congestion/model/model_congestion.dart';
 import 'package:subway_congestion/widget/congestion_view.dart';
 import 'package:subway_congestion/widget/custom_button.dart';
@@ -9,34 +11,127 @@ class CongestionDetailScreen extends StatefulWidget {
   final String subwayName;
   final String direction1;
   final String direction2;
-
-  const CongestionDetailScreen({
+  final firestore = FirebaseFirestore.instance;
+  
+  CongestionDetailScreen({
     super.key,
     required this.subwayName,
     required this.direction1,
     required this.direction2,
   });
+  
 
   @override
   State<CongestionDetailScreen> createState() => _CongestionDetailScreenState();
 }
 
 class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+  List<List<DocumentSnapshot>> splitDocumentsByWeekday(List<DocumentSnapshot> documents) {
+    List<DocumentSnapshot> weekdays = [];
+    List<DocumentSnapshot> saturday = [];
+    List<DocumentSnapshot> holiday = [];
+
+    for (DocumentSnapshot document in documents) {
+      String weekday = document['요일구분'];
+
+      if (weekday == '평일') {
+        weekdays.add(document);
+      } else if (weekday == '토요일') {
+        saturday.add(document);
+      } else if (weekday == '공휴일') {
+        holiday.add(document);
+      }
+    }
+
+    return [weekdays, saturday, holiday];
+  }
+  void fetchData() async {
+    List<DocumentSnapshot> congestionDocuments = await getCongestionDocuments();
+
+    List<List<DocumentSnapshot>> splittedDocuments = splitDocumentsByWeekday(congestionDocuments);
+    List<DocumentSnapshot> weekdays = splittedDocuments[0];
+    List<DocumentSnapshot> saturday = splittedDocuments[1];
+    List<DocumentSnapshot> holiday = splittedDocuments[2];
+
+// 분리된 문서 리스트를 원하는 방식으로 활용
+// 예: 각 문서의 데이터에 접근, 출력 등
+    for (DocumentSnapshot document in weekdays) {
+      print('평일부분임');
+      print(document.data()); // 문서 데이터 출력 예시
+    }
+
+    for (DocumentSnapshot document in saturday) {
+      print('토요일부분임');
+      print(document.data()); // 문서 데이터 출력 예시
+    }
+
+    for (DocumentSnapshot document in holiday) {
+      print('공휴일부분임');
+      print(document.data()); // 문서 데이터 출력 예시
+    }
+
+
+
+  }
+
+  List<List<dynamic>> convertTo2DList(Map<String, dynamic> data) {
+    List<List<dynamic>> result = [];
+    List<dynamic> keys = data.keys.toList();
+    List<dynamic> values = data.values.toList();
+
+    int length = keys.length;
+
+    for (int i = 0; i < length; i++) {
+      List<dynamic> row = [keys[i], values[i]];
+      result.add(row);
+    }
+
+    return result;
+  }
+
+
+
+
+  Future<List<DocumentSnapshot>> getCongestionDocuments() async {
+    List<DocumentSnapshot> documents = [];
+
+    QuerySnapshot snapshot = await widget.firestore
+        .collection('2022congestion')
+        .where('출발역', isEqualTo: widget.subwayName.substring(0,widget.subwayName.length-1))
+        .get();
+
+    documents = snapshot.docs;
+
+    return documents;
+  }
+
+
+
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];bool showAvg = false;
   int _selectedWidgetIndex = 0;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
+  
 
   @override
   Widget build(BuildContext context) {
+
+    @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+      fetchData();
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: getColor('main2'),
@@ -148,7 +243,8 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
                   textAlign: TextAlign.left,
                 ),
               ],
-            )
+            ),
+
 
 
 
@@ -510,5 +606,6 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
     );
 
   }
+
 
 }

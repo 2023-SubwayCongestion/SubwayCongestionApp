@@ -1,3 +1,4 @@
+import 'package:subway_congestion/screen/report_screen.dart';
 import 'package:subway_congestion/screen/subwayCongestion_screen.dart';
 import 'package:subway_congestion/screen/subwayLine_screen.dart';
 import 'package:subway_congestion/services/firebase_auth_methods.dart';
@@ -31,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // showMyChat(),
     SubwayLine(),
     // UserPage(),
-    SubwayCongestion(),
+    // SubwayCongestion(),
+    ReportPage(),
     UserPage(),
 
     // TownScreen(),
