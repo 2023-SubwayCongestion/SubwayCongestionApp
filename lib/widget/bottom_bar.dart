@@ -25,16 +25,12 @@ class _BottomBarState extends State<BottomBar> {
             label: '홈화면',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.cookie_sharp),
-            label: '현우',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.handshake_sharp),
-            label: '민균',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_rounded),
             label: '신고하기',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.perm_device_information_rounded),
+            label: '앱 정보',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.people_sharp),

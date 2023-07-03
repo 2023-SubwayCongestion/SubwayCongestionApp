@@ -1,49 +1,66 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:subway_congestion/screen/detail_screen.dart';
 import 'package:subway_congestion/widget/circle_slider.dart';
+import 'package:subway_congestion/widget/congestion_view.dart';
 
 import '../services/firebase_auth_methods.dart';
+import '../widget/custom_button.dart';
+import 'congestionDetail_screen.dart';
 
-class SubwayLine extends StatefulWidget {
-  const SubwayLine({super.key});
+class SubwayCongestion extends StatefulWidget {
+  const SubwayCongestion({super.key});
 
   @override
-  State<SubwayLine> createState() => _SubwayLineState();
+  State<SubwayCongestion> createState() => _SubwayCongestionState();
 }
 
-class _SubwayLineState extends State<SubwayLine> {
-  List<String> SubwayList = [
-    '충무로역',
-    '동대문역사문화공원역',
-    '동대문역',
-    '혜화역',
-    '한성대입구역',
-    '성신여대역',
-    '길음역',
-    '미아사거리역',
-    '미아역',
-  ];
+class _SubwayCongestionState extends State<SubwayCongestion> {
 
   @override
   Widget build(BuildContext context) {
     final user = context.read<FirebaseAuthMethods>().user;
     return Scaffold(
       body: Stack(
+        alignment: Alignment.center,
         children: [
-          Container(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            color: Color.fromRGBO(245, 243, 228, 1),
-          ),
-      Center(
-        child: AspectRatio(
-            aspectRatio:5.0,
-            child: CircleList(
-                subWayList: SubwayList)
-        )),
-        ],
+          Align(
+              alignment: Alignment.center,
+              child: Container(
+                  // margin: ,
+                  child: CustomButton(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute<Null>(
+                          fullscreenDialog: true,
+                          builder: (BuildContext content){
+                            return CongestionDetailScreen(
+                              subwayName: '충무로역',
+                              direction1: 'None',
+                              direction2: 'None',
+                            );
+                          }
+                      ));
+                    },
+                    text: '혼잡도 버튼',bg_color: Color.fromRGBO(0, 0, 0, 1),tx_color: Color.fromRGBO(255, 255, 255, 1),
+                  ),
 
+              )
+          ),
+
+          //chart 넣어야 함. 시간대별 평균 혼잡도 차트 + 현재 혼잡도는? 몇.  현재역과 시간값만 가져오면 됨.
+
+        ]
       ),
+
+
+
+
+
+
+
+
+
       appBar: AppBar(
         title: Text(
           'MAP',
