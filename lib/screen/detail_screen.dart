@@ -165,9 +165,10 @@ class _DetailScreenState extends State<DetailScreen> {
                       builder: (BuildContext content){
                         return CongestionDetailScreen(
                           subwayName: widget.subwayName,
-                          direction1: 'None',
-                          direction2: 'None',
+                          direction1: _selectedWidgetIndex.toString(),
+                          direction2: _selectedWidgetIndex.toString(),
                         );
+
                       }
                   ));
                 },
