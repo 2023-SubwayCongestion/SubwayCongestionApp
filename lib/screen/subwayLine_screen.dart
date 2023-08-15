@@ -18,7 +18,7 @@ class _SubwayLineState extends State<SubwayLine> {
     '동대문역',
     '혜화역',
     '한성대입구역',
-    '성신여대역',
+    '성신여대입구역',
     '길음역',
     '미아사거리역',
     '미아역',

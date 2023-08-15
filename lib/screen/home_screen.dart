@@ -26,17 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
   static const List<Widget> _widgetOptions = <Widget>[
-    // ocr(),
-    // RecipeScreen(),
-    // showGroupBuying(),
-    // showMyChat(),
     SubwayLine(),
-    // UserPage(),
-    // SubwayCongestion(),
     ReportPage(),
     UserPage(),
 
-    // TownScreen(),
   ];
 
   @override

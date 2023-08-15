@@ -28,6 +28,11 @@ class CongestionDetailScreen extends StatefulWidget {
 class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
 
+  List<double> tmp1=[];
+  // List<double> tmp1 = List<double>.filled(100, 0.0);
+
+
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +57,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
     return [weekdays, saturday, holiday];
   }
-  void fetchData() async {
+  Future<void> fetchData() async {
     List<DocumentSnapshot> congestionDocuments = await getCongestionDocuments();
 
     List<List<DocumentSnapshot>> splittedDocuments = splitDocumentsByWeekday(congestionDocuments);
@@ -62,23 +67,75 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
 // 분리된 문서 리스트를 원하는 방식으로 활용
 // 예: 각 문서의 데이터에 접근, 출력 등
+
+
+
+
+
     for (DocumentSnapshot document in weekdays) {
       print('평일부분임');
-      print(document.data()); // 문서 데이터 출력 예시
+      tmp1=[
+        double.parse(document.get("6시00분").toString()),
+        double.parse(document.get("6시30분").toString()),
+        double.parse(document.get("7시00분").toString()),
+        double.parse(document.get("7시30분").toString()),
+        double.parse(document.get("8시00분").toString()),
+        double.parse(document.get("8시30분").toString()),
+        double.parse(document.get("9시00분").toString()),
+        double.parse(document.get("9시30분").toString()),
+        double.parse(document.get("10시00분").toString()),
+        double.parse(document.get("10시30분").toString()),
+        double.parse(document.get("11시00분").toString()),
+        double.parse(document.get("11시30분").toString()),
+        double.parse(document.get("12시00분").toString()),
+        double.parse(document.get("12시30분").toString()),
+        double.parse(document.get("13시00분").toString()),
+        double.parse(document.get("13시30분").toString()),
+        double.parse(document.get("14시00분").toString()),
+        double.parse(document.get("14시30분").toString()),
+        double.parse(document.get("15시00분").toString()),
+        double.parse(document.get("15시30분").toString()),
+        double.parse(document.get("16시00분").toString()),
+        double.parse(document.get("16시30분").toString()),
+        double.parse(document.get("17시00분").toString()),
+        double.parse(document.get("17시30분").toString()),
+        double.parse(document.get("18시00분").toString()),
+        double.parse(document.get("18시30분").toString()),
+        double.parse(document.get("19시00분").toString()),
+        double.parse(document.get("19시30분").toString()),
+        double.parse(document.get("20시00분").toString()),
+        double.parse(document.get("20시30분").toString()),
+        double.parse(document.get("21시00분").toString()),
+        double.parse(document.get("21시30분").toString()),
+        double.parse(document.get("22시00분").toString()),
+        double.parse(document.get("22시30분").toString()),
+        double.parse(document.get("23시00분").toString()),
+        double.parse(document.get("23시30분").toString()),
+
+      ];
+
+      print(tmp1.toString());
+
+      // print(document.data()); // 문서 데이터 출력 예시
+      // print(document.get("14시00분"));
     }
 
-    for (DocumentSnapshot document in saturday) {
-      print('토요일부분임');
-      print(document.data()); // 문서 데이터 출력 예시
-    }
-
-    for (DocumentSnapshot document in holiday) {
-      print('공휴일부분임');
-      print(document.data()); // 문서 데이터 출력 예시
-    }
 
 
+    // for (DocumentSnapshot document in saturday) {
+    //   print('토요일부분임');
+    //   print(document.data()); // 문서 데이터 출력 예시
+    // }
+    //
+    // for (DocumentSnapshot document in holiday) {
+    //   print('공휴일부분임');
+    //   print(document.data()); // 문서 데이터 출력 예시
+    // }
 
+
+    setState(() {
+
+    });
   }
 
   List<List<dynamic>> convertTo2DList(Map<String, dynamic> data) {
@@ -101,14 +158,35 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
   Future<List<DocumentSnapshot>> getCongestionDocuments() async {
     List<DocumentSnapshot> documents = [];
+    String directionName = "";
+    if (widget.direction1 == '1') {
+      directionName = "상선";
+    }
+    else {
+      directionName = "하선";
+    }
+    if (widget.subwayName.substring(0, widget.subwayName.length - 1) ==
+        "미아사거리") {
+      QuerySnapshot snapshot = await widget.firestore
+          .collection('2022congestion')
+          .where('출발역', isEqualTo: widget.subwayName.substring(
+          0, widget.subwayName.length - 1))
+          .where('상하구분', isEqualTo: directionName)
+          .get();
+      documents = snapshot.docs;
+      print("미아");
+    } else {
+      QuerySnapshot snapshot = await widget.firestore
+          .collection('2022congestion')
+          .where('출발역', isEqualTo: widget.subwayName.substring(
+          0, widget.subwayName.length - 1))
+          .where('상하구분', isEqualTo: directionName)
+          .get();
 
-    QuerySnapshot snapshot = await widget.firestore
-        .collection('2022congestion')
-        .where('출발역', isEqualTo: widget.subwayName.substring(0,widget.subwayName.length-1))
-        .get();
+      documents = snapshot.docs;
+      print(widget.subwayName.substring(0, widget.subwayName.length - 1));
 
-    documents = snapshot.docs;
-
+    }
     return documents;
   }
 
@@ -149,10 +227,12 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
         ),
         title: Center(
           child: Text(
-            widget.subwayName + ' 시간대별 혼잡도 통계     ',
+            widget.subwayName + ' 혼잡도 통계     ',
             style: TextStyle(
                 color: getColor('main1'),
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold,
+            ),
+
           ),
         ),
       ),
@@ -171,7 +251,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
                 children: <Widget>[
                   TextButton(
                     child: Text(
-                      showAvg ? '평균 혼잡율 보기' : '시간대별 혼잡율 보기',
+                      showAvg ? '시간대별 혼잡율 보기' : '평균 혼잡율 보기',
                       style: TextStyle(
                           color: getColor('main1'),
                           // showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
@@ -184,13 +264,14 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
                     },
                   ),
                   AspectRatio(
-                    aspectRatio: 3 / 2,
+                    aspectRatio: 4 / 5,
                     child: Container(
+                      margin: EdgeInsets.only(right: 10, left: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(10),
+                            Radius.circular(30),
                           ),
-                        color: getColor('main1')),
+                        color: getColor('white')),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                         child: LineChart(
@@ -204,46 +285,46 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
             ),
 
             Text('(단위 : %,  단위기준 : 열차 1량의 승차인원 = 160명 = 100%)'),
-            SizedBox(
-              height: 50,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '< 혼잡도 수치에 따른 체감정도 >',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  '34% - 서있는 사람 없이 좌석에 모두 앉은 상태',
-                  textAlign: TextAlign.left,
-                ),SizedBox(height: 10),
-                Text(
-                  '100% - 한 칸에 160명이 탑승한 상태',
-                  textAlign: TextAlign.left,
-                ),SizedBox(height: 10),
-                Text(
-                  '125% - 이동시 다소 부딪힐 정도의 상태',
-                  textAlign: TextAlign.left,
-                ),SizedBox(height: 10),
-                Text(
-                  '140% - 출입문 주변 혼잡, 이동시 어깨 부딪힐 정도의 상태',
-                  textAlign: TextAlign.left,
-                ),SizedBox(height: 10),
-                Text(
-                  '200% 이상 - 밀착되고 숨이 막히는 수준',
-                  textAlign: TextAlign.left,
-                ),SizedBox(height: 10),
-                Text(
-                  '230% - 수용 한계점',
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text(
+            //       '< 혼잡도 수치에 따른 체감정도 >',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     // SizedBox(height: 20),
+            //     Text(
+            //       '34% - 서있는 사람 없이 좌석에 모두 앉은 상태',
+            //       textAlign: TextAlign.left,
+            //     ),
+            //     Text(
+            //       '100% - 한 칸에 160명이 탑승한 상태',
+            //       textAlign: TextAlign.left,
+            //     ),
+            //     Text(
+            //       '125% - 이동시 다소 부딪힐 정도의 상태',
+            //       textAlign: TextAlign.left,
+            //     ),
+            //     Text(
+            //       '140% - 출입문 주변 혼잡, 이동시 어깨 부딪힐 정도의 상태',
+            //       textAlign: TextAlign.left,
+            //     ),
+            //     Text(
+            //       '200% 이상 - 밀착되고 숨이 막히는 수준',
+            //       textAlign: TextAlign.left,
+            //     ),
+            //     Text(
+            //       '230% - 수용 한계점',
+            //       textAlign: TextAlign.left,
+            //     ),
+            //   ],
+            // ),
 
 
 
@@ -259,143 +340,145 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
 
 
+  LineChartData mainChart() {
+    return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: Color(0xff37434d),
+            strokeWidth: 0,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: Color(0xff37434d),
+            strokeWidth: 0,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
 
-    LineChartData mainChart() {
-      return LineChartData(
-        gridData: FlGridData(
-          show: true,
-          drawVerticalLine: true,
-          getDrawingHorizontalLine: (value) {
-            return FlLine(
-              color: Color(0xff37434d),
-              strokeWidth: 0.5,
-            );
-          },
-          getDrawingVerticalLine: (value) {
-            return FlLine(
-              color: Color(0xff37434d),
-              strokeWidth: 0.5,
-            );
-          },
+        bottomTitles: AxisTitles(
+          axisNameWidget: Text(
+            '시간',
+            style: TextStyle(
+              fontSize: 10,
+              // color: mainLineColor,
+              fontWeight: FontWeight.bold,
+              color: getColor('main1'),
+            ),
+          ),
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 18,
+            interval: 1,
+            getTitlesWidget: bottomTitleWidgets,
+          ),
         ),
-        titlesData: FlTitlesData(
-          show: true,
 
-          bottomTitles: AxisTitles(
-            axisNameWidget: Text(
-              '시간',
-              style: TextStyle(
-                fontSize: 10,
-                // color: mainLineColor,
-                fontWeight: FontWeight.bold,
-
-              ),
-            ),
-            sideTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 18,
-              interval: 1,
-              getTitlesWidget: bottomTitleWidgets,
+        leftTitles: AxisTitles(
+          axisNameSize: 20,
+          axisNameWidget: const Text(
+            '혼잡도(%)',
+            style: TextStyle(
+              // color: getColor('main1'),
+              // color: AppColors.mainTextColor2,
             ),
           ),
-
-          leftTitles: AxisTitles(
-            axisNameSize: 20,
-            axisNameWidget: const Text(
-              '혼잡도(%)',
-              style: TextStyle(
-                // color: AppColors.mainTextColor2,
-              ),
-            ),
-            sideTitles: SideTitles(
-              showTitles: true,
-              interval: 1,
-              reservedSize: 40,
-              getTitlesWidget: leftTitleWidgets,
-            ),
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            reservedSize: 40,
+            getTitlesWidget: leftTitleWidgets,
           ),
+        ),
 
-          //오른쪽 0 50 100 150 지우기
-          rightTitles: AxisTitles(
+        //오른쪽 0 50 100 150 지우기
+        rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: false,
             )
-          ),
-
-          //위쪽 0 50 100 150 지우기
-          topTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: false,
-              )
-          ),
-
         ),
-        borderData: FlBorderData(
-            show: true,
-            border: Border.all(color: const Color(0xff37434d), width: 3)),
-        minX: 6,
-        maxX: 24,
-        minY: 0,
-        maxY: 200,
 
-        lineBarsData: [
+        //위쪽 0 50 100 150 지우기
+        topTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: false,
+            )
+        ),
 
-          LineChartBarData(
-            show: true,
-            spots: [
-              FlSpot(6, 21.7),
-              FlSpot(6.5, 23.7),
-              FlSpot(7, 41.9),
-              FlSpot(7.5, 52.4),
-              FlSpot(8, 70.8),
-              FlSpot(8.5, 78.6),
-              FlSpot(9, 48.5),
-              FlSpot(9.5, 58.5),
-              FlSpot(10, 30.1),
-              FlSpot(10.5, 38.6),
-              FlSpot(11, 35.9),
-              FlSpot(11.5, 39),
-              FlSpot(12, 34.6),
-              FlSpot(12.5, 38.8),
-              FlSpot(13, 37.9),
-              FlSpot(13.5, 36.1),
-              FlSpot(14, 27),
-              FlSpot(14.5, 38.6),
-              FlSpot(15, 37.1),
-              FlSpot(15.5, 41.1),
-              FlSpot(16, 44.6),
-              FlSpot(16.5, 46.3),
-              FlSpot(17, 42.5),
-              FlSpot(17.5, 38),
-              FlSpot(18, 48.1),
-              FlSpot(18.5, 38.3),
-              FlSpot(19, 26.3),
-              FlSpot(19.5, 21.9),
-              FlSpot(20, 18.3),
-              FlSpot(20.5, 16.2),
-              FlSpot(21, 21.7),
-              FlSpot(21.5, 25.8),
-              FlSpot(22, 26.2),
-              FlSpot(22.5, 22.3),
-              FlSpot(23, 17.9),
-              FlSpot(23.5, 10.9),
+      ),
+      borderData: FlBorderData(
+          show: false, //테두리선
+          border: Border.all(color: const Color(0xff37434d), width: 1)),
+      minX: 6,
+      maxX: 24,
+      minY: 0,
+      maxY: 200,
 
-            ],
+      lineBarsData: [
 
-            isCurved: true,
-            color: Colors.red,
-            barWidth: 3,
-            isStrokeCapRound: true,
-            dotData: FlDotData(
-              show: false,
-            ),
-            // belowBarData: BarAreaData(
-            //   show: true,
-            //   color: Colors.blue,
-            // ),
+        LineChartBarData(
+          show: true,
+          spots: [
+            FlSpot(6, tmp1[0]),
+            FlSpot(6.5, tmp1[1]),
+            FlSpot(7, tmp1[2]),
+            FlSpot(7.5, tmp1[3]),
+            FlSpot(8, tmp1[4]),
+            FlSpot(8.5, tmp1[5]),
+            FlSpot(9, tmp1[6]),
+            FlSpot(9.5, tmp1[7]),
+            FlSpot(10, tmp1[8]),
+            FlSpot(10.5, tmp1[9]),
+            FlSpot(11, tmp1[10]),
+            FlSpot(11.5, tmp1[11]),
+            FlSpot(12, tmp1[12]),
+            FlSpot(12.5, tmp1[13]),
+            FlSpot(13, tmp1[14]),
+            FlSpot(13.5, tmp1[15]),
+            FlSpot(14, tmp1[16]),
+            FlSpot(14.5, tmp1[17]),
+            FlSpot(15, tmp1[18]),
+            FlSpot(15.5, tmp1[19]),
+            FlSpot(16, tmp1[20]),
+            FlSpot(16.5, tmp1[21]),
+            FlSpot(17, tmp1[22]),
+            FlSpot(17.5, tmp1[23]),
+            FlSpot(18, tmp1[24]),
+            FlSpot(18.5, tmp1[25]),
+            FlSpot(19, tmp1[26]),
+            FlSpot(19.5, tmp1[27]),
+            FlSpot(20, tmp1[28]),
+            FlSpot(20.5, tmp1[29]),
+            FlSpot(21, tmp1[30]),
+            FlSpot(21.5, tmp1[31]),
+            FlSpot(22, tmp1[32]),
+            FlSpot(22.5, tmp1[33]),
+            FlSpot(23, tmp1[34]),
+            FlSpot(23.5, tmp1[35]),
+            FlSpot(24, tmp1[35]),
+
+
+          ],
+
+          isCurved: true,
+          color: Color.fromRGBO(84, 162, 154, 1),
+          barWidth: 6,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
           ),
-        ],
-      );
+          // belowBarData: BarAreaData(
+          //   show: true,
+          //   color: Colors.blue,
+          // ),
+        ),
+      ],
+    );
     }
 
     LineChartData avgChart() {
@@ -406,13 +489,13 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
           drawHorizontalLine: true,
           getDrawingVerticalLine: (value) {
             return FlLine(
-              color: const Color(0xff37434d),
+              color: getColor('main1'),
               strokeWidth: 1,
             );
           },
           getDrawingHorizontalLine: (value) {
             return FlLine(
-              color: const Color(0xff37434d),
+              color: getColor('main1'),
               strokeWidth: 1,
             );
           },
@@ -476,7 +559,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
         ),
         borderData: FlBorderData(
             show: true,
-            border: Border.all(color: const Color(0xff37434d), width: 1)),
+            border: Border.all(color: getColor('main1'), width: 1)),
         minX: 6,
         maxX: 24,
         minY: 0,
@@ -495,7 +578,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
             //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
             //       .lerp(0.2),
             // ],
-            barWidth: 5,
+            barWidth: 10,
             isStrokeCapRound: true,
             dotData: FlDotData(
               show: false,
@@ -556,11 +639,12 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 4,
+      space: 1,
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
+          color: getColor('main1'),
           // color: mainLineColor,
           fontWeight: FontWeight.bold,
         ),
@@ -571,7 +655,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Colors.red,
-      fontSize: 12,
+      fontSize: 13,
     );
     String text;
     switch (value.toInt()) {
@@ -587,19 +671,18 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
       case 200:
         text = '200';
         break;
-
       default:
         return Container();
     }
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 4,
+      space: 10,
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 10,
-          // color: mainLineColor,
+          fontSize: 13,
+          color: getColor('main1'),
           fontWeight: FontWeight.bold,
         ),
       ),

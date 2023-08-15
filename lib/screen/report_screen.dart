@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_donation_buttons/flutter_donation_buttons.dart';
 import 'package:provider/provider.dart';
+import 'package:subway_congestion/header.dart';
 import '../services/firebase_auth_methods.dart';
-import '../utils/category.dart';
-import '../widget/custom_button.dart';
-import '../widget/custom_image.dart';
+import '../widget/bottom_bar.dart';
 import 'home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart'; // For formatting timestamp
+
 
 
 class ReportPage extends StatefulWidget {
@@ -17,14 +18,21 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPage extends State<ReportPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add this line
 
+  String title = '1'; // Declare these variables
+  String content = '2';
+  String selectedStation = '3';
+  String selectedDirection = '4';
+  final firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     final user = context
         .read<FirebaseAuthMethods>()
         .user;
+
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: getColor('main2'),
         appBar: AppBar(
           title: Text(
             'REPORT',
@@ -92,271 +100,289 @@ class _ReportPage extends State<ReportPage> {
             padding: const EdgeInsets.fromLTRB(20.0, 40.0, 0.0, 0.0),
             children: <Widget>[
               Form(
-                // key: _formKey,
+                key: _formKey,
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const Text(
-                      //   '지하철역',
-                      //   style: TextStyle(
-                      //     letterSpacing: 1.0,
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 15,
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(right: 0.0),
-                      //   child: Column(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         Container(
-                      //           width:
-                      //           MediaQuery.of(context).size.width / 1.1,
-                      //           child: DropdownButtonFormField(
-                      //             hint: Text('상위 카테고리를 선택해주세요',
-                      //                 style: TextStyle(
-                      //                     color: Colors.black, fontSize: 17)),
-                      //             isExpanded: true,
-                      //             alignment: Alignment.center,
-                      //             items: upperCategoryList.map((value) {
-                      //               return DropdownMenuItem(
-                      //                 value: value,
-                      //                 child: Center(
-                      //                   child: Text(
-                      //                     value,
-                      //                     textAlign: TextAlign.center,
-                      //                   ),
-                      //                 ),
-                      //               );
-                      //             }).toList(),
-                      //             onChanged: (String? value) {
-                      //               // setState(() {
-                      //               //   selectedUpper = value!;
-                      //               //   post.upperCategory = value;
-                      //               //   lowerCategoryList =
-                      //               //       setLowerCategory(value!.toString());
-                      //               //   selectedLower = lowerCategoryList[0];
-                      //               // });
-                      //             },
-                      //             onSaved: (value) {
-                      //               // selectedUpper = value!.toString();
-                      //               // post.upperCategory = value;
-                      //               // lowerCategoryList =
-                      //               //     setLowerCategory(value!.toString());
-                      //             },
-                      //             value: selectedUpper == null
-                      //                 ? null
-                      //                 : selectedUpper,
-                      //           ),
-                      //         ),
-                      //       ]),
-                      // ),
-                      // const SizedBox(
-                      //   height: 20.0,
-                      //   width: 600,
-                      // ),
-
-                      // 하위 카테고리 //
-                      // const Text(
-                      //   '지하철 방면',
-                      //   style: TextStyle(
-                      //     letterSpacing: 1.0,
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 15,
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(right: 20.0),
-                      //   child: Column(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       Container(
-                      //         width:
-                      //         MediaQuery.of(context).size.width / 1.1,
-                      //         child: DropdownButtonFormField(
-                      //           hint: Text('하위 카테고리를 선택해주세요',
-                      //               style: TextStyle(
-                      //                   color: Colors.black, fontSize: 17)),
-                      //           isExpanded: true,
-                      //           alignment: Alignment.center,
-                      //           items: upperCategoryList.map((value) {
-                      //             return DropdownMenuItem(
-                      //               value: value,
-                      //               child: Center(
-                      //                 child: Text(
-                      //                   value,
-                      //                   textAlign: TextAlign.center,
-                      //                 ),
-                      //               ),
-                      //             );
-                      //           }).toList(),
-                      //           onChanged: (String? value) {
-                      //             // setState(() {
-                      //             //   selectedUpper = value!;
-                      //             //   post.upperCategory = value;
-                      //             //   lowerCategoryList =
-                      //             //       setLowerCategory(value!.toString());
-                      //             //   selectedLower = lowerCategoryList[0];
-                      //             // });
-                      //           },
-                      //           onSaved: (value) {
-                      //             // selectedUpper = value!.toString();
-                      //             // post.upperCategory = value;
-                      //             // lowerCategoryList =
-                      //             //     setLowerCategory(value!.toString());
-                      //           },
-                      //           value: selectedUpper == null
-                      //               ? null
-                      //               : selectedUpper,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 20.0,
-                      // ),
-
-                      // 제목 //
-                      const Text(
-                        '제목',
-                        style: TextStyle(
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 제목 //
+                    const Text(
+                      '신고 제목',
+                      style: TextStyle(
+                        letterSpacing: 1.0,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: TextFormField(
-                          key: ValueKey(1),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '제목을 입력해주세요!';
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: const InputDecoration(
-                            hintText: '제목을 입력해주세요.',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: TextFormField(
+                        key: ValueKey(1),
+                        onSaved: (value) {
+                          title = value ?? '';
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            title = value ?? '';
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return '제목을 입력해주세요!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          hintText: '제목을 입력해주세요.',
+                        ),
+                        autofocus: true,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+
+                    // 내용 //
+                    const Text(
+                      '내용',
+                      style: TextStyle(
+                        letterSpacing: 1.0,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      height: 10 * 24.0,
+                      padding: const EdgeInsets.only(right: 15),
+                      child: TextFormField(
+                        key: ValueKey(2),
+                        onSaved: (value) {
+                          content = value ?? '';
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            content = value ?? '';
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return '내용을 입력해주세요!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        maxLines: 10,
+                        decoration: const InputDecoration(
+                          hintText: '내용을 입력해주세요.',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                            ),
                           ),
-                          // onChanged: (text) {
-                          //   post.title = text;
-                          // },
-                          // onSaved: (text) {
-                          //   post.title = text;
-                          // },
-                          autofocus: true,
+                        ),
+                        autofocus: true,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+
+                    // 드롭다운 박스 //
+                    const Text(
+                      '역 선택',
+                      style: TextStyle(
+                        letterSpacing: 1.0,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: DropdownButtonFormField<String>(
+                        key: ValueKey(3),
+                        onSaved: (value) {
+                          selectedStation = value ?? '';
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '역을 선택해주세요!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        items: ['충무로', '동대문역사문화공원','동대문','혜화','한성대입구','성신여대입구','길음','미아사거리','미아'].map((String station) {
+                          return DropdownMenuItem<String>(
+                            value: station,
+                            child: Text(station),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedStation = newValue ?? '';
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          hintText: '역을 선택해주세요.',
                         ),
                       ),
-                      const SizedBox(
-                        height: 20.0,
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    // 드롭다운 박스 (방면 선택) //
+                    const Text(
+                      '방면 선택',
+                      style: TextStyle(
+                        letterSpacing: 1.0,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
-
-                      // 내용 //
-                      const Text(
-                        '내용',
-                        style: TextStyle(
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: DropdownButtonFormField<String>(
+                        key: ValueKey(4),
+                        onSaved: (value) {
+                          selectedDirection = value ?? '';
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '방면을 선택해주세요!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        items: ['미아행', '충무로행'].map((String direction) {
+                          return DropdownMenuItem<String>(
+                            value: direction,
+                            child: Text(direction),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedDirection = newValue ?? '';
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          hintText: '방면을 선택해주세요.',
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.all(10),
-                        height: 10 * 24.0,
-                        padding: const EdgeInsets.only(right: 15),
-                        child: TextFormField(
-                          key: ValueKey(2),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '내용을 입력해주세요!';
-                            } else {
-                              return null;
-                            }
-                          },
-                          maxLines: 10,
-                          decoration: const InputDecoration(
-                              hintText: '내용을 입력해주세요.',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                ),
-                              )),
-                          // onChanged: (text) {
-                          //   post.content = text;
-                          // },
-                          // onSaved: (text) {
-                          //   post.content = text;
-                          // },
-                          autofocus: true,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-
-                      // 인원 //
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 50),
-                            child: OutlinedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const HomeScreen()),
-                                );
-                              },
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.grey,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const ReportPage()),
+                              );
+                            },
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
                               ),
-                              child: const Text(
-                                '초기화하기',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
+                            ),
+                            child: const Text(
+                              '초기화하기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 50.0,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 50),
-                            child: OutlinedButton(
-                              onPressed: () {
-                                // showPopup(context);
-                              },
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: const Color(0xff686EFF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
+                        ),
+                        const SizedBox(
+                          width: 50.0,
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(bottom: 50),
+                        //   child: OutlinedButton(
+                        //     onPressed: () {
+                        //       // showPopup(context);
+                        //     },
+                        //     style: OutlinedButton.styleFrom(
+                        //       backgroundColor: const Color(0xff686EFF),
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(18.0),
+                        //       ),
+                        //     ),
+                        //     child: const Text(
+                        //       '제출하기',
+                        //       style: TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50),
+                          child: OutlinedButton(
+                            onPressed: () async {
+                              print("start!!");
+                              if (_formKey.currentState!.validate()) {
+                                String currentTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+                                try {
+                                  await firestore.collection('personalReport').add({
+                                    'title': title,
+                                    'content': content,
+                                    'station': selectedStation,
+                                    'direction': selectedDirection,
+                                    'timestamp': currentTime,
+                                  });
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const ReportPage()),
+
+                                  );
+                                } catch (error) {
+                                  print('Error saving data: $error');
+                                }
+
+                              }
+                              print("end!!");
+                            },
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: const Color(0xff686EFF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
                               ),
-                              child: const Text(
-                                '제출하기',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            child: const Text(
+                              '제출하기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                        ],
-                      )
-                    ]),
+                        ),
+
+
+                      ],
+                    )
+                  ],
+                ),
               ),
+
             ]
-        )
+        ),
+        // bottomNavigationBar: BottomBar(0, 0),
     );
   }
 }
+
+
+

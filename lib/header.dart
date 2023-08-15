@@ -13,6 +13,9 @@ Color getColor(String colorName){
     case 'grey':
       chooseColor = Colors.grey;
       break;
+    case 'white':
+      chooseColor = Colors.white;
+      break;
     default:
       chooseColor = Color.fromRGBO(84, 162, 154, 1);
       break;
