@@ -302,28 +302,6 @@ class _ReportPage extends State<ReportPage> {
                         const SizedBox(
                           width: 50.0,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(bottom: 50),
-                        //   child: OutlinedButton(
-                        //     onPressed: () {
-                        //       // showPopup(context);
-                        //     },
-                        //     style: OutlinedButton.styleFrom(
-                        //       backgroundColor: const Color(0xff686EFF),
-                        //       shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(18.0),
-                        //       ),
-                        //     ),
-                        //     child: const Text(
-                        //       '제출하기',
-                        //       style: TextStyle(
-                        //         fontWeight: FontWeight.bold,
-                        //         color: Colors.white,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
 
                         Padding(
                           padding: const EdgeInsets.only(bottom: 50),
