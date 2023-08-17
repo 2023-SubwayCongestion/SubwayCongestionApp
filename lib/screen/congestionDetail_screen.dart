@@ -39,6 +39,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
     fetchData();
   }
   List<List<DocumentSnapshot>> splitDocumentsByWeekday(List<DocumentSnapshot> documents) {
+    print("splitDocumentsByWeekday start");
     List<DocumentSnapshot> weekdays = [];
     List<DocumentSnapshot> saturday = [];
     List<DocumentSnapshot> holiday = [];
@@ -54,10 +55,11 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
         holiday.add(document);
       }
     }
-
+    print("splitDocumentsByWeekday end");
     return [weekdays, saturday, holiday];
   }
   Future<void> fetchData() async {
+    print("fetchData start");
     List<DocumentSnapshot> congestionDocuments = await getCongestionDocuments();
 
     List<List<DocumentSnapshot>> splittedDocuments = splitDocumentsByWeekday(congestionDocuments);
@@ -136,9 +138,11 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
     setState(() {
 
     });
+    print("fetchData end");
   }
 
   List<List<dynamic>> convertTo2DList(Map<String, dynamic> data) {
+    print("convertTo2DList start");
     List<List<dynamic>> result = [];
     List<dynamic> keys = data.keys.toList();
     List<dynamic> values = data.values.toList();
@@ -149,7 +153,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
       List<dynamic> row = [keys[i], values[i]];
       result.add(row);
     }
-
+    print("convertTo2DList end");
     return result;
   }
 
@@ -157,6 +161,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
 
   Future<List<DocumentSnapshot>> getCongestionDocuments() async {
+    print("getCongestionDocuments start");
     List<DocumentSnapshot> documents = [];
     String directionName = "";
     if (widget.direction1 == '1') {
@@ -187,6 +192,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
       print(widget.subwayName.substring(0, widget.subwayName.length - 1));
 
     }
+    print("getCongestionDocument end");
     return documents;
   }
 
