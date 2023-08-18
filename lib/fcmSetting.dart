@@ -6,22 +6,37 @@ import 'package:subway_congestion/firebase_options.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:subway_congestion/key.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> saveTokenToDatabase(String token) async {
-  // 현재 사용자를 식별하는 방법에 따라 변경됩니다. 예를 들어 FirebaseAuth의 user.uid를 사용할 수 있습니다.
-  String userId = 'test-user-id';
+  User? user = FirebaseAuth.instance.currentUser;
 
-  try {
-    CollectionReference tokens = FirebaseFirestore.instance.collection('tokens');
+  if (user != null) {
+    String userId = user.uid;
 
-    // 토큰과 사용자 ID를 함께 저장하려면 다음과 같이 작성하세요.
-    await tokens.add({ 'token': token, 'userId': userId });
+    try {
+      CollectionReference tokens = FirebaseFirestore.instance.collection('user_data');
 
-    print('새 토큰을 데이터베이스에 저장합니다: $token');
-  } catch (e) {
-    print('새 토큰을 데이터베이스에 저장하는 데 실패했습니다: $e');
+      // 토큰이 이미 있는지 확인합니다.
+      var isTokenExists = await tokens.where('token', isEqualTo: token).get();
+
+      // 이미 있는 토큰이 아니면 저장합니다.
+      if (isTokenExists.docs.isEmpty) {
+        // 토큰과 사용자 ID를 함께 저장하려면 다음과 같이 작성하세요.
+        await tokens.add({ 'token': token, 'userId': userId });
+
+        print('새 토큰을 데이터베이스에 저장합니다: $token');
+      } else {
+        print('이미 존재하는 토큰입니다.');
+      }
+    } catch (e) {
+      print('새 토큰을 데이터베이스에 저장하는 데 실패했습니다: $e');
+    }
+  } else {
+    print('로그인한 사용자가 없습니다.');
   }
 }
+
 
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
