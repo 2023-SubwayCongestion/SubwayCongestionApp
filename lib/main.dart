@@ -127,6 +127,8 @@
 
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:subway_congestion/fcmSetting.dart';
 import 'package:subway_congestion/firebase_options.dart';
 import 'package:subway_congestion/screen/home_screen.dart';
 import 'package:subway_congestion/screen/login_email_password_screen.dart';
@@ -141,9 +143,21 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  fcmSetting();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
+
   // if (kIsWeb) {
   //   FacebookAuth.i.webInitialize(
   //     appId: "1129634001214960", // Replace with your app id
