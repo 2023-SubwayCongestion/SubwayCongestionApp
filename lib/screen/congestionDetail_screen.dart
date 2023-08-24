@@ -29,6 +29,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
 
   List<double> tmp1=[];
+  double sum=0.0;
   // List<double> tmp1 = List<double>.filled(100, 0.0);
 
 
@@ -61,7 +62,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
   Future<void> fetchData() async {
     print("fetchData start");
     List<DocumentSnapshot> congestionDocuments = await getCongestionDocuments();
-
+    // print(congestionDocuments.toString());
     List<List<DocumentSnapshot>> splittedDocuments = splitDocumentsByWeekday(congestionDocuments);
     List<DocumentSnapshot> weekdays = splittedDocuments[0];
     List<DocumentSnapshot> saturday = splittedDocuments[1];
@@ -115,6 +116,10 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
         double.parse(document.get("23시30분").toString()),
 
       ];
+      for (var number in tmp1) {
+        sum += number;
+      }
+      sum/=tmp1.length;
 
       print(tmp1.toString());
 
@@ -521,63 +526,23 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
                 showTitles: false,
               )
           ),
-          // bottomTitles: SideTitles(
-          //   showTitles: true,
-          //   reservedSize: 22,
-          //   textStyle: const TextStyle(
-          //       color: Color(0xff68737d),
-          //       fontWeight: FontWeight.bold,
-          //       fontSize: 16),
-          //   getTitles: (value) {
-          //     switch (value.toInt()) {
-          //       case 2:
-          //         return 'MAR';
-          //       case 5:
-          //         return 'JUN';
-          //       case 8:
-          //         return 'SEP';
-          //     }
-          //     return '';
-          //   },
-          //   margin: 8,
-          // ),
-          // leftTitles: SideTitles(
-          //   showTitles: true,
-          //   textStyle: const TextStyle(
-          //     color: Color(0xff67727d),
-          //     fontWeight: FontWeight.bold,
-          //     fontSize: 15,
-          //   ),
-          //   getTitles: (value) {
-          //     switch (value.toInt()) {
-          //       case 1:
-          //         return '10k';
-          //       case 3:
-          //         return '30k';
-          //       case 5:
-          //         return '50k';
-          //     }
-          //     return '';
-          //   },
-          //   reservedSize: 28,
-          //   margin: 12,
-          // ),
         ),
         borderData: FlBorderData(
             show: true,
-            border: Border.all(color: getColor('main1'), width: 1)),
+            border: Border.all(color: getColor('main1'), width: 3)),
         minX: 6,
         maxX: 24,
         minY: 0,
-        maxY: 200,
+        maxY: 100,
 
         lineBarsData: [
           LineChartBarData(
             spots: [
-              FlSpot(6, 40),
-              FlSpot(24, 40),
+              FlSpot(6, sum),
+              FlSpot(24, sum),
             ],
             isCurved: true,
+            color:getColor('main1'),
             // colors: [
             //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
             //       .lerp(0.2),
@@ -590,6 +555,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
               show: false,
             ),
             belowBarData: BarAreaData(show: true,
+              color: getColor('main2'),
               //     colors: [
               //   ColorTween(begin: gradientColors[0], end: gradientColors[1])
               //       .lerp(0.2)
