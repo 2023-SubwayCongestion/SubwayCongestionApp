@@ -318,11 +318,12 @@ class _ReportPage extends State<ReportPage> {
                                     'station': selectedStation,
                                     'direction': selectedDirection,
                                     'timestamp': currentTime,
+                                    'read':0,
                                   });
 
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const ReportPage()),
+                                    MaterialPageRoute(builder: (context) => const HomeScreen()),
 
                                   );
                                 } catch (error) {
