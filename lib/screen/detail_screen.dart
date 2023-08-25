@@ -38,7 +38,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Congestion realTimeinfo2 = Congestion.fromMap({
     'lastDest': '미아행',
     'time': '12:50',
-    'items': [1,2,0,1,2],
+    'items': [0,0,0,0,0],
   });
 
 
@@ -65,30 +65,63 @@ class _DetailScreenState extends State<DetailScreen> {
   //
   //   print("ok");
   // }
+
+
+  Future<List<DocumentSnapshot>> getCongestionRealTimeTrain(int i) async {
+    print("getCongestionRealTimeTrain start");
+    print(widget.subwayName);
+    print(widget.direction1);
+    print(widget.direction2);
+
+
+    List<DocumentSnapshot> documents = [];
+
+    QuerySnapshot snapshot = await widget.firestore
+        .collection('realTimeTrain')
+        .where('hocha', isEqualTo: i)
+        .where('source', isEqualTo: widget.subwayName.substring( //source가 사용자가 클릭한 역
+        0, widget.subwayName.length - 1))
+        .where('destination', isEqualTo: widget.direction2.substring( //destination이 그냥 혜화역 방면인거로 fix
+        0, widget.direction2.length - 1))
+        .get();
+    documents = snapshot.docs;
+
+    print(documents.toString());
+    print("getCongestionRealTimeTrain end");
+    return documents;
+  }
+
   Future<void> fetchData() async {
-    List<DocumentSnapshot> realTimeTrain = await getCongestionRealTimeTrain();
-    int conges=0;
+    var conges=[0,0,0,0,0];
     DateTime currentTime = DateTime.now();
-    int nearestIndex = findNearestTimestampIndex(currentTime, realTimeTrain);
+    for(int i=0;i<5;i++){
+      List<DocumentSnapshot> realTimeTrain = await getCongestionRealTimeTrain(i+1);
+      
 
-    Map<String, dynamic> nearestData = realTimeTrain[nearestIndex].data() as Map<String, dynamic>;
-    Timestamp nearestTimestamp = nearestData['date'];
-    DateTime nearestDateTime = nearestTimestamp.toDate();
+      int nearestIndex = findNearestTimestampIndex(currentTime, realTimeTrain);
 
-    String nearestCongestion=nearestData['congestion'];
+      Map<String, dynamic> nearestData = realTimeTrain[nearestIndex].data() as Map<String, dynamic>;
+      Timestamp nearestTimestamp = nearestData['date'];
+      DateTime nearestDateTime = nearestTimestamp.toDate();
 
-    print('Nearest congestion: $nearestCongestion');
-    if(nearestCongestion=="여유"){
-      conges=0;
-    }else if(nearestCongestion=="보통"){
-      conges=1;
-    }else{
-      conges=2;
+      String nearestCongestion=nearestData['congestion'];
+
+      print('Nearest congestion: $nearestCongestion');
+      if(nearestCongestion=="여유"){
+        conges[i]=0;
+      }else if(nearestCongestion=="보통"){
+        conges[i]=1;
+      }else{
+        conges[i]=2;
+      }
+      // print('Nearest Index: $nearestIndex');
+      print('Nearest Timestamp: $nearestDateTime');
+      print('Nearest Data: $nearestData');
+      
     }
-    print('Nearest Index: $nearestIndex');
-    print('Nearest Timestamp: $nearestDateTime');
-    print('Nearest Data: $nearestData');
-
+    
+    
+    
     realTimeinfo1 = Congestion.fromMap({
       'lastDest': '충무로행',
       'time': '12:50',
@@ -98,11 +131,12 @@ class _DetailScreenState extends State<DetailScreen> {
     realTimeinfo2 = Congestion.fromMap({
       'lastDest': '미아행',
       'time': '12:50',
-      'items': [1,2,conges,1,2],
+      'items': [conges[0],conges[1],conges[2],conges[3],conges[4]],
     });
     setState(() {
 
     });
+    
   }
 
   int findNearestTimestampIndex(DateTime currentTime, List<DocumentSnapshot> snapshots) {
@@ -127,27 +161,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
 
-  Future<List<DocumentSnapshot>> getCongestionRealTimeTrain() async {
-    print("getCongestionRealTimeTrain start");
-    print(widget.subwayName);
-    print(widget.direction1);
-    print(widget.direction2);
 
-
-    List<DocumentSnapshot> documents = [];
-
-      QuerySnapshot snapshot = await widget.firestore
-          .collection('realTimeTrain')
-          .where('hocha', isEqualTo: 3) //3호차만 기준으로 하기로 했으니까 3으로 걍 넣어줌.
-          .where('source', isEqualTo: widget.subwayName.substring(
-          0, widget.subwayName.length - 1))
-          .get();
-      documents = snapshot.docs;
-
-    print(documents.toString());
-    print("getCongestionRealTimeTrain end");
-    return documents;
-  }
 
   // 두 위젯 중 하나를 반환하는 메서드
   Widget _getDisplayWidget() {

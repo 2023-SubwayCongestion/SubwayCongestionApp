@@ -340,7 +340,7 @@ class _ReportPage extends State<ReportPage> {
                               ),
                             ),
                             child: const Text(
-                              '제출하기',
+                              '신고하기',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
