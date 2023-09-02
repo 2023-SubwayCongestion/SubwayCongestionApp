@@ -1,3 +1,4 @@
+import 'package:subway_congestion/screen/notification_screen.dart';
 import 'package:subway_congestion/screen/report_screen.dart';
 import 'package:subway_congestion/screen/subwayCongestion_screen.dart';
 import 'package:subway_congestion/screen/subwayLine_screen.dart';
@@ -28,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     SubwayLine(),
     ReportPage(),
+    NotificationScreen(),
     UserPage(),
-
   ];
 
   @override
