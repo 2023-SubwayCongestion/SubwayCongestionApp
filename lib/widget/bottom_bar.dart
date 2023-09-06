@@ -32,10 +32,10 @@ class _BottomBarState extends State<BottomBar> {
             icon: Icon(Icons.warning),
             label: '알림',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.perm_device_information_rounded),
-            label: '앱 정보',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.perm_device_information_rounded),
+          //   label: '앱 정보',
+          // ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.people_sharp),
           //   label: '마이페이지',

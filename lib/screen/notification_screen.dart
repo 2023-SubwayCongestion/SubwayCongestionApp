@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:subway_congestion/header.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../widget/myMenu.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -25,6 +27,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         elevation: 0.0,
         backgroundColor: Color.fromRGBO(84, 162, 154, 1),
       ),
+      drawer: myMenu(),
       body: Center(
         child:
         Padding(
