@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:subway_congestion/widget/circle_slider.dart';
 
 import '../services/firebase_auth_methods.dart';
+import '../widget/myMenu.dart';
 
 class SubwayLine extends StatefulWidget {
   const SubwayLine({super.key});
@@ -53,60 +54,64 @@ class _SubwayLineState extends State<SubwayLine> {
         elevation: 0.0,
         backgroundColor: Color.fromRGBO(84, 162, 154, 1),
       ),
-      drawer: Drawer(
-        // 앱바 왼편에 햄버거 버튼 생성
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/logo.png'),
-                backgroundColor: Colors.white,
-              ),
-              // otherAccountsPictures: [
-              //   CircleAvatar(
-              //     // backgroundImage: AssetImage('assets/github.png'),
-              //     backgroundColor: Colors.white,
-              //   )
-              // ],
-              accountName: Text('멋진쟃빛박쥐#0011'),
-              accountEmail: Text(user.email!),
-              onDetailsPressed: () {
-                print('arrow is clicked');
-              },
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(84, 162, 154, 1),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0))),
-            ),
-            ListTile(
-              leading: Icon(Icons.location_on, color: Colors.grey[850]),
-              title: Text('위치'),
-              onTap: () {
-                print('Home is clicked');
-              },
-              trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings, color: Colors.grey[850]),
-              title: Text('설정'),
-              onTap: () {
-                print('Setting is clicked');
-              },
-              trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(Icons.campaign, color: Colors.grey[850]),
-              title: Text('공지사항'),
-              onTap: () {
-                print('Q&A is clicked');
-              },
-              trailing: Icon(Icons.add),
-            ),
-          ],
-        ),
-      ),
+      drawer: myMenu(),
+
+      // drawer: Drawer(
+      //   // 앱바 왼편에 햄버거 버튼 생성
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       UserAccountsDrawerHeader(
+      //         currentAccountPicture: CircleAvatar(
+      //           backgroundImage: AssetImage('assets/logo.png'),
+      //           backgroundColor: Colors.white,
+      //         ),
+      //         // otherAccountsPictures: [
+      //         //   CircleAvatar(
+      //         //     // backgroundImage: AssetImage('assets/github.png'),
+      //         //     backgroundColor: Colors.white,
+      //         //   )
+      //         // ],
+      //         accountName: Text('멋진쟃빛박쥐#0011'),
+      //         accountEmail: Text(user.email!),
+      //         onDetailsPressed: () {
+      //           print('arrow is clicked');
+      //         },
+      //         decoration: BoxDecoration(
+      //             color: Color.fromRGBO(84, 162, 154, 1),
+      //             borderRadius: BorderRadius.only(
+      //                 bottomLeft: Radius.circular(40.0),
+      //                 bottomRight: Radius.circular(40.0))),
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.location_on, color: Colors.grey[850]),
+      //         title: Text('위치'),
+      //         onTap: () {
+      //           print('Home is clicked');
+      //         },
+      //         trailing: Icon(Icons.add),
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.settings, color: Colors.grey[850]),
+      //         title: Text('설정'),
+      //         onTap: () {
+      //           print('Setting is clicked');
+      //         },
+      //         trailing: Icon(Icons.add),
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.door_front_door_outlined, color: Colors.grey[850]),
+      //         title: Text('로그아웃'),
+      //         onTap: () {
+      //           context.read<FirebaseAuthMethods>().signOut(context);
+      //         },
+      //         trailing: Icon(Icons.add),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+
+
     );
   }
 }

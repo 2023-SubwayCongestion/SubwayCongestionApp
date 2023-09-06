@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SubwayLine(),
     ReportPage(),
     NotificationScreen(),
-    UserPage(),
+    // UserPage(),
   ];
 
   @override
