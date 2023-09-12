@@ -71,7 +71,7 @@ class FirebaseAuthMethods {
         // transition to another page instead of home screen
       }
       else {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SubwayLine()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, '입력값을 확인해주세요!'); // Displaying the error message

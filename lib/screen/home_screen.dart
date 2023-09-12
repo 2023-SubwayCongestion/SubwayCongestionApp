@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     SubwayLine(),
     ReportPage(),
     NotificationScreen(),
-    // UserPage(),
   ];
 
   @override
@@ -38,25 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = context.read<FirebaseAuthMethods>().user;
 
     return Scaffold(
-      // body: Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     // 이하 코드 생략...
-      //
-      //     CustomButton(
-      //       onTap: () {
-      //         context.read<FirebaseAuthMethods>().signOut(context);
-      //       },
-      //       text: 'Sign out',
-      //     ),
-      //     CustomButton(
-      //       onTap: () {
-      //         context.read<FirebaseAuthMethods>().deleteAccount(context);
-      //       },
-      //       text: 'Delete Account',
-      //     ),
-      //   ],
-      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
