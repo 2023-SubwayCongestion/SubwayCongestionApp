@@ -31,28 +31,37 @@ List<Widget> makeCircleImages(BuildContext context, List<String> list) {
               }
           ));
         },
-        child: Row(
-          children: [
-            Container(
-              //아니 왜 크기가 큰지 모르겠어요,,AspectRatio이걸로 하니깐
-              //작아지긴했는데 왜인지는 모르겠어. 아래 color는 임시 디버깅용.
-              // color: Colors.amber,
-              child: Column(
-                children: [
-                  Text(list[i]),
-                  SizedBox(height: 10),
-                  CustomPaint(
-                    size: Size(30, 30),
-                    painter: CirclePainter(
-                        textSize: list[i].length,
-                        nextTextSize: ((i + 1) != list.length) ? list[i + 1].length : -1),
+        child:
+          Column(
+            children: [
+
+              Row(
+              children: [
+                Container(
+                  //아니 왜 크기가 큰지 모르겠어요,,AspectRatio이걸로 하니깐
+                  //작아지긴했는데 왜인지는 모르겠어. 아래 color는 임시 디버깅용.
+                  // color: Colors.amber,
+                  child: Column(
+                    children: [
+                      Text(list[i]),
+                      SizedBox(height: 10),
+                      CustomPaint(
+                        size: Size(30, 30),
+                        painter: CirclePainter(
+                            textSize: list[i].length,
+                            nextTextSize: ((i + 1) != list.length) ? list[i + 1].length : -1),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                SizedBox(width: 20),
+              ],
             ),
-            SizedBox(width: 20),
-          ],
-        ),
+
+
+            ]
+          ),
+
       ),
     );
   }

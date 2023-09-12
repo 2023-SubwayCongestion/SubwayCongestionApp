@@ -1,13 +1,9 @@
 import 'package:subway_congestion/screen/login_email_password_screen.dart';
-// import 'package:subway_congestion/screen/phone_screen.dart';
 import 'package:subway_congestion/screen/signup_email_password_screen.dart';
-import 'package:subway_congestion/services/firebase_auth_methods.dart';
 import 'package:subway_congestion/widget/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:subway_congestion/widget/custom_image.dart';
 
-import '../header.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

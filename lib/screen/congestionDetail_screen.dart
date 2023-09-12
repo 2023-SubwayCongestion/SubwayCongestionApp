@@ -7,6 +7,12 @@ import 'package:subway_congestion/model/model_congestion.dart';
 import 'package:subway_congestion/widget/congestion_view.dart';
 import 'package:subway_congestion/widget/custom_button.dart';
 
+import '../presentation/samples/bar/bar_chart_sample1.dart';
+import '../presentation/samples/bar/bar_chart_sample3.dart';
+import '../presentation/samples/line/line_chart_sample2.dart';
+import '../presentation/samples/pie/pie_chart_sample1.dart';
+import '../presentation/samples/pie/pie_chart_sample2.dart';
+
 class CongestionDetailScreen extends StatefulWidget {
   final String subwayName;
   final String direction1;
@@ -24,13 +30,12 @@ class CongestionDetailScreen extends StatefulWidget {
   @override
   State<CongestionDetailScreen> createState() => _CongestionDetailScreenState();
 }
-
+List<double> tmp1=[];
 class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
 
+  // List<double> tmp1=[];
 
-  List<double> tmp1=[];
   double sum=0.0;
-  // List<double> tmp1 = List<double>.filled(100, 0.0);
 
 
 
@@ -126,20 +131,6 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
       // print(document.data()); // 문서 데이터 출력 예시
       // print(document.get("14시00분"));
     }
-
-
-
-    // for (DocumentSnapshot document in saturday) {
-    //   print('토요일부분임');
-    //   print(document.data()); // 문서 데이터 출력 예시
-    // }
-    //
-    // for (DocumentSnapshot document in holiday) {
-    //   print('공휴일부분임');
-    //   print(document.data()); // 문서 데이터 출력 예시
-    // }
-
-
     setState(() {
 
     });
@@ -221,133 +212,190 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
       fetchData();
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: getColor('main2'),
-        elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.cancel_outlined,
-            size: 30,
-          ),
-          color: getColor('main1'),
-          // X 버튼의 색상을 변경합니다. 원하는 색상으로 변경하세요.
-          onPressed: () {
-            Navigator.of(context).pop(); // 뒤로 가기 버튼과 동일한 동작을 수행합니다.
-          },
-        ),
-        title: Center(
-          child: Text(
-            widget.subwayName + ' 혼잡도 통계     ',
-            style: TextStyle(
-                color: getColor('main1'),
-                fontWeight: FontWeight.bold,
+      return DefaultTabController(
+        initialIndex: 1,
+        length: 3,
+        child:
+        // Scaffold(
+        //   appBar: AppBar(
+        //     title: const Text('TabBar Sample'),
+        //     bottom: const TabBar(
+        //       tabs: <Widget>[
+        //         Tab(
+        //           icon: Icon(Icons.cloud_outlined),
+        //         ),
+        //         Tab(
+        //           icon: Icon(Icons.beach_access_sharp),
+        //         ),
+        //         Tab(
+        //           icon: Icon(Icons.brightness_5_sharp),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        Scaffold(
+          appBar: AppBar(
+            backgroundColor: getColor('main2'),
+            elevation: 0.0,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.cancel_outlined,
+                size: 30,
+              ),
+              color: getColor('main1'),
+              // X 버튼의 색상을 변경합니다. 원하는 색상으로 변경하세요.
+              onPressed: () {
+                Navigator.of(context).pop(); // 뒤로 가기 버튼과 동일한 동작을 수행합니다.
+              },
             ),
+            title: Center(
+              child: Text(
+                widget.subwayName + ' 혼잡도 통계     ',
+                style: TextStyle(
+                  color: getColor('main1'),
+                  fontWeight: FontWeight.bold,
+                ),
 
-          ),
-        ),
-      ),
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        color: getColor('main2'),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-
-            SafeArea(
-              child: Column(
-                children: <Widget>[
-                  TextButton(
-                    child: Text(
-                      showAvg ? '시간대별 혼잡율 보기' : '평균 혼잡율 보기',
-                      style: TextStyle(
-                          color: getColor('main1'),
-                          // showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
-                      )),
-                    onPressed: () {
-                      print('click');
-                      setState(() {
-                        showAvg = !showAvg;
-                      });
-                    },
-                  ),
-                  AspectRatio(
-                    aspectRatio: 4 / 5,
-                    child: Container(
-                      margin: EdgeInsets.only(right: 10, left: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        color: getColor('white')),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        child: LineChart(
-                          showAvg ? avgChart() : mainChart(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
+                bottom: const TabBar(
+                  labelColor: Colors.red, //<-- selected text color
+                  unselectedLabelColor: Colors.black,
+                  tabs: <Widget>[
+                    Tab(
+                      text: '시간대별',
+                    ),
+                    Tab(
+                      text: '요일별',
+                    ),
+                    Tab(
+                      text: '호차별',
+                    ),
+                  ],
+          ),
+          ),
 
-            Text('(단위 : %,  단위기준 : 열차 1량의 승차인원 = 160명 = 100%)'),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text(
-            //       '< 혼잡도 수치에 따른 체감정도 >',
-            //       style: TextStyle(
-            //         fontSize: 20,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //     // SizedBox(height: 20),
-            //     Text(
-            //       '34% - 서있는 사람 없이 좌석에 모두 앉은 상태',
-            //       textAlign: TextAlign.left,
-            //     ),
-            //     Text(
-            //       '100% - 한 칸에 160명이 탑승한 상태',
-            //       textAlign: TextAlign.left,
-            //     ),
-            //     Text(
-            //       '125% - 이동시 다소 부딪힐 정도의 상태',
-            //       textAlign: TextAlign.left,
-            //     ),
-            //     Text(
-            //       '140% - 출입문 주변 혼잡, 이동시 어깨 부딪힐 정도의 상태',
-            //       textAlign: TextAlign.left,
-            //     ),
-            //     Text(
-            //       '200% 이상 - 밀착되고 숨이 막히는 수준',
-            //       textAlign: TextAlign.left,
-            //     ),
-            //     Text(
-            //       '230% - 수용 한계점',
-            //       textAlign: TextAlign.left,
-            //     ),
-            //   ],
-            // ),
+          body: Container(
+            color: getColor('main2'), // 배경색 설정
+            child: TabBarView(
+              children: <Widget>[
 
 
 
-
-          ],
+                BarChartSample3(),
+                BarChartSample1(),
+                PieChartSample1(),
+              ],
+            ),
+          ),
         ),
-      ),
+      );
+    }
 
 
 
-    );
-  }
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     backgroundColor: getColor('main2'),
+    //     elevation: 0.0,
+    //     leading: IconButton(
+    //       icon: const Icon(
+    //         Icons.cancel_outlined,
+    //         size: 30,
+    //       ),
+    //       color: getColor('main1'),
+    //       // X 버튼의 색상을 변경합니다. 원하는 색상으로 변경하세요.
+    //       onPressed: () {
+    //         Navigator.of(context).pop(); // 뒤로 가기 버튼과 동일한 동작을 수행합니다.
+    //       },
+    //     ),
+    //     title: Center(
+    //       child: Text(
+    //         widget.subwayName + ' 혼잡도 통계     ',
+    //         style: TextStyle(
+    //             color: getColor('main1'),
+    //             fontWeight: FontWeight.bold,
+    //         ),
+    //
+    //       ),
+    //     ),
+    //   ),
+    //   body:
+    //   Container(
+    //     color : getColor('main2'),
+    //     child: ListView(
+    //       // width: double.maxFinite,
+    //       // height: double.maxFinite,
+    //       // backgroundColor: getColor('main2'),
+    //         children: [
+    //           Column(
+    //             children: [
+    //               SizedBox(
+    //                 height: 30,
+    //               ),
+    //
+    //               SafeArea(
+    //                 child: Column(
+    //                   children: <Widget>[
+    //
+    //
+    //                     BarChartSample1(),
+    //                     PieChartSample2(),
+    //                     BarChartSample3(),
+    //
+    //
+    //                     TextButton(
+    //                       child: Text(
+    //                           showAvg ? '시간대별 혼잡율 보기' : '호차별 혼잡율 보기',
+    //                           style: TextStyle(
+    //                             color: getColor('main1'),
+    //                             // showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
+    //                           )),
+    //                       onPressed: () {
+    //                         print('click');
+    //                         setState(() {
+    //                           showAvg = !showAvg;
+    //                         });
+    //                       },
+    //                     ),
+    //                     AspectRatio(
+    //                       aspectRatio: 4 / 5,
+    //                       child: Container(
+    //                         margin: EdgeInsets.only(right: 10, left: 10),
+    //                         decoration: BoxDecoration(
+    //                             borderRadius: BorderRadius.all(
+    //                               Radius.circular(30),
+    //                             ),
+    //                             color: getColor('white')),
+    //                         child: Padding(
+    //                           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+    //                           child: LineChart(
+    //                             showAvg ? avgChart() : mainChart(),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                     ),
+    //
+    //                   ],
+    //                 ),
+    //               ),
+    //
+    //               Text('(단위 : %,  단위기준 : 열차 1량의 승차인원 = 160명 = 100%)'),
+    //
+    //
+    //
+    //
+    //
+    //             ],
+    //           ),
+    //         ]),
+    //   ),
+    //
+    //
+    //
+    //
+    // );
+  // }
 
 
 
@@ -395,6 +443,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
           axisNameWidget: const Text(
             '혼잡도(%)',
             style: TextStyle(
+              color: Color.fromRGBO(84, 162, 154, 1),
               // color: getColor('main1'),
               // color: AppColors.mainTextColor2,
             ),
@@ -428,7 +477,7 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
       minX: 6,
       maxX: 24,
       minY: 0,
-      maxY: 200,
+      maxY: 150,
 
       lineBarsData: [
 
