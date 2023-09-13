@@ -259,8 +259,10 @@ class _CongestionDetailScreenState extends State<CongestionDetailScreen> {
               ),
             ),
                 bottom: const TabBar(
-                  labelColor: Colors.red, //<-- selected text color
+                  labelColor: Color(0xFF54A29A), //<-- selected text color
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
                   unselectedLabelColor: Colors.black,
+                  indicatorColor: Color(0xFF54A29A), // This changes the color of the tab indicator.
                   tabs: <Widget>[
                     Tab(
                       text: '시간대별',

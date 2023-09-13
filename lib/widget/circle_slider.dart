@@ -16,7 +16,7 @@ class CircleList extends StatelessWidget {
 
 List<Widget> makeCircleImages(BuildContext context, List<String> list) {
   List<Widget> results = [];
-  for (var i = 0; i < list.length; i++) {
+  for (var i = 0; i < 3; i++) {
     results.add(
       InkWell(
         onTap: (){
@@ -65,6 +65,7 @@ List<Widget> makeCircleImages(BuildContext context, List<String> list) {
       ),
     );
   }
+
   return results;
 }
 
