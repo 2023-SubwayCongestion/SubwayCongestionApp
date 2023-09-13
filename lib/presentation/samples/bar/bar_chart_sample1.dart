@@ -42,7 +42,14 @@ class BarChartSample1State extends State<BarChartSample1> {
   @override
   Widget build(BuildContext context) {
     DateTime currentTime = DateTime.now();
-    String formattedHour = '${currentTime.hour}시';
+    String formattedHour;
+    if(currentTime.hour - 11 <= 0){
+      formattedHour = '${24-currentTime.hour  }시';
+    }else{
+      formattedHour = '${currentTime.hour -11  }시';
+    }
+
+
     String formattedTime;
     if(currentTime.minute >= 30){
       formattedTime='30분';
@@ -74,7 +81,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                 Text(
                   '시간 기준 : $formattedHour $formattedTime',
                   style: TextStyle(
-                    color: AppColors.contentColorGreen.darken(),
+                    color: Color(0xFF757575),
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -104,7 +111,7 @@ class BarChartSample1State extends State<BarChartSample1> {
               child: IconButton(
                 icon: Icon(
                   isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: AppColors.contentColorGreen,
+                  color: AppColors.contentColorRed, //재생버튼
                 ),
                 onPressed: () {
                   setState(() {
@@ -270,7 +277,7 @@ class BarChartSample1State extends State<BarChartSample1> {
 
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.red,
+      color: AppColors.contentColorRed,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );

@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/bottom_bar.dart';
-import '../widget/custom_button.dart';
-import 'mypage_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   static const List<Widget> _widgetOptions = <Widget>[
     SubwayLine(),
+    // ScatterChartSample2(),
     ReportPage(),
     NotificationScreen(),
   ];

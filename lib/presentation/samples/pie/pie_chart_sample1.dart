@@ -42,49 +42,49 @@ class PieChartSample1State extends State {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Indicator(
-                color: AppColors.contentColorBlue,
+                color: Color(0xFF22726E),
                 text: '1호차',
                 isSquare: false,
                 size: touchedIndex == 0 ? 18 : 16,
                 textColor: touchedIndex == 0
-                    ? AppColors.menuBackground
+                    ? AppColors.contentColorCyan
                     : AppColors.pageBackground,
 
               ),
               Indicator(
-                color: AppColors.contentColorYellow,
+                color: Color(0xFF4CB3AD),
                 text: '2호차',
                 isSquare: false,
                 size: touchedIndex == 1 ? 18 : 16,
                 textColor: touchedIndex == 1
-                    ? AppColors.menuBackground
+                    ? AppColors.contentColorCyan
                     : AppColors.pageBackground,
               ),
               Indicator(
-                color: AppColors.contentColorPink,
+                color: Color(0xFF6FD5CF),
                 text: '3호차',
                 isSquare: false,
                 size: touchedIndex == 2 ? 18 : 16,
                 textColor: touchedIndex == 2
-                    ? AppColors.menuBackground
+                    ? AppColors.contentColorCyan
                     : AppColors.pageBackground,
               ),
               Indicator(
-                color: AppColors.contentColorGreen,
+                color: Color(0xFFDFFFFD),
                 text: '4호차',
                 isSquare: false,
                 size: touchedIndex == 3 ? 18 : 16,
                 textColor: touchedIndex == 3
-                    ? AppColors.menuBackground
+                    ? AppColors.contentColorCyan
                     : AppColors.pageBackground,
               ),
               Indicator(
-                color: AppColors.contentColorRed,
+                color: Color(0xFF2F8C88),
                 text: '5호차',
                 isSquare: false,
                 size: touchedIndex == 4 ? 18 : 16,
                 textColor: touchedIndex == 4
-                    ? AppColors.menuBackground
+                    ? AppColors.contentColorCyan
                     : AppColors.pageBackground,
               ),
             ],
@@ -132,11 +132,11 @@ class PieChartSample1State extends State {
       5,
       (i) {
         final isTouched = i == touchedIndex;
-        const color0 = AppColors.contentColorBlue;
-        const color1 = AppColors.contentColorYellow;
-        const color2 = AppColors.contentColorPink;
-        const color3 = AppColors.contentColorGreen;
-        const color4 = AppColors.contentColorRed;
+        const color0 = Color(0xFF22726E);
+        const color1 = Color(0xFF4CB3AD);
+        const color2 = Color(0xFF6FD5CF);
+        const color3 = Color(0xFFDFFFFD);
+        const color4 = Color(0xFF2F8C88);
 
         switch (i) {
           case 0:
@@ -183,7 +183,7 @@ class PieChartSample1State extends State {
               color: color3,
               value: 25,
               title: '',
-              radius: 140,
+              radius: 170,
               titlePositionPercentageOffset: 0.55,
               borderSide: isTouched
                   ? const BorderSide(

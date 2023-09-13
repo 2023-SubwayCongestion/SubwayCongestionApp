@@ -51,7 +51,7 @@ class _BarChart extends StatelessWidget {
 
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
-      color: AppColors.contentColorBlue.darken(20),
+      color: AppColors.contentColorRed.darken(20),
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
@@ -115,8 +115,8 @@ class _BarChart extends StatelessWidget {
 
   LinearGradient get _barsGradient => LinearGradient(
         colors: [
-          AppColors.contentColorBlue.darken(20),
-          AppColors.contentColorCyan,
+          Color(0xFF22726E),
+          Color(0xFF4CB3AD),
         ],
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
