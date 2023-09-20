@@ -1,6 +1,12 @@
-# Subway Congestion
+## Subway Congestion
 ![image](https://github.com/2023-SubwayCongestion/SubwayCongestion/assets/23547185/f547654d-4219-4a35-8a0c-d9bf09000012)
 
+
+## 시연 영상
+https://github.com/2023-SubwayCongestion/SubwayCongestion/assets/23547185/ab698f5f-08f2-4351-848c-06ff2e946dda
+
+## 고화질 영상 링크
+https://dguackr-my.sharepoint.com/:v:/g/personal/1rladbdus_dgu_ac_kr/EXR89RnkAtNHovrqDPJENqcBhtGaHIStBZPeVxI2nMUJ_g?e=g8xwrO
 
 ## 🌱 FLUTTER TEAM
 | <img src="https://avatars.githubusercontent.com/u/23547185?v=4" width=90px alt="강현우"/>  | <img src="https://avatars.githubusercontent.com/u/86116666?v=4" width=90px alt="박민균"/>  |  
