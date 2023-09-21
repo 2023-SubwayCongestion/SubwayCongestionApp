@@ -1,5 +1,5 @@
 ### 🚎 Subway Congestion
-<img src="https://github.com/2023-SubwayCongestion/SubwayCongestion/assets/23547185/f547654d-4219-4a35-8a0c-d9bf09000012" width=300px alt="강현우"/>
+<img src="https://avatars.githubusercontent.com/u/137379087?s=200&v=4" width=300px alt="강현우"/>
 
 <br>
 
