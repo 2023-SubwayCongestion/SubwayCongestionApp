@@ -1,7 +1,6 @@
 ### 🚎 Subway Congestion
-<img src="https://avatars.githubusercontent.com/u/137379087?s=200&v=4" width=300px alt="강현우"/>
+<img src="https://avatars.githubusercontent.com/u/137379087?s=200&v=4" width=100px alt="강현우"/>
 
-<br>
 
 ### 🚎 시연 영상
 https://github.com/2023-SubwayCongestion/SubwayCongestion/assets/23547185/ab698f5f-08f2-4351-848c-06ff2e946dda
