@@ -38,7 +38,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Congestion realTimeinfo2 = Congestion.fromMap({
     'lastDest': '미아행',
     'time': '12:50',
-    'items': [0,0,0,0,0],
+    'items': [1,0,2,1,0],
   });
 
 
@@ -76,6 +76,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
     List<DocumentSnapshot> documents = [];
 
+
+
     QuerySnapshot snapshot = await widget.firestore
         .collection('realTimeTrain')
         .where('hocha', isEqualTo: i)
@@ -84,7 +86,21 @@ class _DetailScreenState extends State<DetailScreen> {
         .where('destination', isEqualTo: widget.direction2.substring( //destination이 그냥 혜화역 방면인거로 fix
         0, widget.direction2.length - 1))
         .get();
+
+
+    //더미데이터 삭제하기. 1회만 실행되면 됨. 실행 후 이 코드는 제거
+    // QuerySnapshot s= await firestore.collection('realTimeTrain').where('destination', isEqualTo: "test").get();
+    // for (var doc in s.docs) {
+    //   var documentId = doc.id;
+    //   print('Document ID: $documentId');
+    //   await firestore.collection('realTimeTrain').doc(documentId).delete();
+    // }
+
+
     documents = snapshot.docs;
+
+
+
 
     print(documents.toString());
     print("getCongestionRealTimeTrain end");
@@ -99,10 +115,16 @@ class _DetailScreenState extends State<DetailScreen> {
       
 
       int nearestIndex = findNearestTimestampIndex(currentTime, realTimeTrain);
-
+      DateTime nearestDateTime;
       Map<String, dynamic> nearestData = realTimeTrain[nearestIndex].data() as Map<String, dynamic>;
-      Timestamp nearestTimestamp = nearestData['date'];
-      DateTime nearestDateTime = nearestTimestamp.toDate();
+      if(nearestData['date'] is Timestamp){
+        Timestamp nearestTimestamp = nearestData['date'];
+        nearestDateTime = nearestTimestamp.toDate();
+      }else{
+        String str=nearestData['date'];
+        nearestDateTime = DateTime.parse(str);
+      }
+
 
       String nearestCongestion=nearestData['congestion'];
 
@@ -136,6 +158,10 @@ class _DetailScreenState extends State<DetailScreen> {
     setState(() {
 
     });
+
+
+
+
     
   }
 
@@ -145,8 +171,19 @@ class _DetailScreenState extends State<DetailScreen> {
 
     for (int i = 0; i < snapshots.length; i++) {
       Map<String, dynamic> data = snapshots[i].data() as Map<String, dynamic>;
-      Timestamp timestamp = data['date'];
-      DateTime dateTime = timestamp.toDate();
+      DateTime dateTime;
+
+      if(data['date'] is Timestamp){
+        Timestamp timestamp = data['date'];
+        dateTime=timestamp.toDate();
+      }else{
+        String dateString=data['date'];
+        dateTime = DateTime.parse(dateString);
+      }
+
+
+
+
 
       int difference = (dateTime.millisecondsSinceEpoch - currentTime.millisecondsSinceEpoch).abs();
 

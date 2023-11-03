@@ -1,9 +1,7 @@
 import 'package:subway_congestion/util/app_helper.dart';
 
 import 'bar/bar_chart_sample1.dart';
-import 'bar/bar_chart_sample2.dart';
 import 'bar/bar_chart_sample3.dart';
-import 'bar/bar_chart_sample4.dart';
 import 'bar/bar_chart_sample5.dart';
 import 'bar/bar_chart_sample6.dart';
 import 'bar/bar_chart_sample7.dart';
