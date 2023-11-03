@@ -29,6 +29,11 @@ class BarChartSample1 extends StatefulWidget {
 
 class BarChartSample1State extends State<BarChartSample1> {
   final Duration animDuration = const Duration(milliseconds: 1000);
+  DateTime currentTime = DateTime.now(); // 현재 시간 변수 추가
+  String formattedHour = ''; // 시간 포맷 변수 추가
+  String formattedTime = ''; // 분 포맷 변수 추가
+
+  // 현재 시간을 초기화하는 메서드
 
   int touchedIndex = -1;
 
@@ -41,20 +46,25 @@ class BarChartSample1State extends State<BarChartSample1> {
   // String formattedTime = '${currentTime.hour}시 ${currentTime.minute}분';
   @override
   Widget build(BuildContext context) {
-    DateTime currentTime = DateTime.now();
-    String formattedHour;
+    // DateTime currentTime = DateTime.now();
+    // String formattedHour;
     if(currentTime.hour - 11 <= 0){
       formattedHour = '${24-currentTime.hour  }시';
     }else{
-      formattedHour = '${currentTime.hour -11  }시';
+      formattedHour = '${currentTime.hour -12  }시';
     }
 
 
-    String formattedTime;
-    if(currentTime.minute >= 30){
-      formattedTime='30분';
+    // String formattedTime;
+    // if(currentTime.minute >= 30){
+    //   formattedTime='30분';
+    // }else{
+    //   formattedTime='00분';
+    // }
+    if(currentTime.minute<10){
+      formattedTime='0'+currentTime.minute.toString()+'분';
     }else{
-      formattedTime='00분';
+      formattedTime=currentTime.minute.toString()+'분';
     }
 
     return AspectRatio(
@@ -65,7 +75,7 @@ class BarChartSample1State extends State<BarChartSample1> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const Text(
                   '요일별 혼잡도 통계',
@@ -104,26 +114,26 @@ class BarChartSample1State extends State<BarChartSample1> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                icon: Icon(
-                  isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: AppColors.contentColorRed, //재생버튼
-                ),
-                onPressed: () {
-                  setState(() {
-                    isPlaying = !isPlaying;
-                    if (isPlaying) {
-                      refreshState();
-                    }
-                  });
-                },
-              ),
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.all(8),
+          //   child: Align(
+          //     alignment: Alignment.topRight,
+          //     child: IconButton(
+          //       icon: Icon(
+          //         isPlaying ? Icons.pause : Icons.play_arrow,
+          //         color: AppColors.contentColorRed, //재생버튼별
+          //       ),
+          //       onPressed: () {
+          //         setState(() {
+          //           isPlaying = !isPlaying;
+          //           if (isPlaying) {
+          //             refreshState();
+          //           }
+          //         });
+          //       },
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -279,7 +289,7 @@ class BarChartSample1State extends State<BarChartSample1> {
     const style = TextStyle(
       color: AppColors.contentColorRed,
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 16,
     );
     Widget text;
     switch (value.toInt()) {
@@ -416,4 +426,6 @@ class BarChartSample1State extends State<BarChartSample1> {
       await refreshState();
     }
   }
+
+
 }

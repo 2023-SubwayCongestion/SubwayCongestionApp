@@ -11,6 +11,19 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var max = tmp1[0];
+    List<int> indices = [0, 6, 12, 18, 25];
+
+    double max = 0; // 최솟값으로 초기화
+
+    for (int index in indices) {
+      if (index >= 0 && index < tmp1.length) { // 주어진 인덱스가 유효한지 확인
+        if (tmp1[index] > max) {
+          max = tmp1[index];
+        }
+      }
+    }
+
     return BarChart(
 
       BarChartData(
@@ -21,7 +34,7 @@ class _BarChart extends StatelessWidget {
         barGroups: barGroups,
         gridData:  FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
-        maxY: 150,
+        maxY: max+20,
       ),
     );
   }
@@ -31,7 +44,7 @@ class _BarChart extends StatelessWidget {
         touchTooltipData: BarTouchTooltipData(
           tooltipBgColor: Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 8,
+          tooltipMargin: 10,
           getTooltipItem: (
             BarChartGroupData group,
             int groupIndex,
@@ -129,6 +142,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[0],
               gradient: _barsGradient,
+              width: 15,
             )
           ],
           showingTooltipIndicators: [0],
@@ -140,6 +154,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[6],
               gradient: _barsGradient,
+              width: 20,
             )
           ],
           showingTooltipIndicators: [0],
@@ -150,6 +165,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[12],
               gradient: _barsGradient,
+              width: 20,
             )
           ],
           showingTooltipIndicators: [0],
@@ -160,6 +176,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[18],
               gradient: _barsGradient,
+              width: 20,
             )
           ],
           showingTooltipIndicators: [0],
@@ -170,6 +187,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[24],
               gradient: _barsGradient,
+              width: 20,
             )
           ],
           showingTooltipIndicators: [0],
@@ -180,6 +198,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[30],
               gradient: _barsGradient,
+              width: 20,
             )
           ],
           showingTooltipIndicators: [0],
@@ -190,6 +209,7 @@ class _BarChart extends StatelessWidget {
             BarChartRodData(
               toY: tmp1[35],
               gradient: _barsGradient,
+              width: 20,
             )
           ],
           showingTooltipIndicators: [0],

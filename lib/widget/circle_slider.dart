@@ -3,20 +3,22 @@ import 'package:subway_congestion/screen/detail_screen.dart';
 
 class CircleList extends StatelessWidget {
   final List<String> subWayList;
-  const CircleList({super.key, required this.subWayList});
+
+  final Color color1;
+  const CircleList({super.key, required this.subWayList, required this.color1});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.horizontal,
-      children: makeCircleImages(context, subWayList),
+      children: makeCircleImages(context, subWayList,color1),
     );
   }
 }
 
-List<Widget> makeCircleImages(BuildContext context, List<String> list) {
+List<Widget> makeCircleImages(BuildContext context, List<String> list, Color color1) {
   List<Widget> results = [];
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < list.length; i++) {
     results.add(
       InkWell(
         onTap: (){
@@ -46,10 +48,11 @@ List<Widget> makeCircleImages(BuildContext context, List<String> list) {
                       Text(list[i]),
                       SizedBox(height: 10),
                       CustomPaint(
-                        size: Size(30, 30),
+                        size: Size(40, 40),
                         painter: CirclePainter(
                             textSize: list[i].length,
-                            nextTextSize: ((i + 1) != list.length) ? list[i + 1].length : -1),
+                            nextTextSize: ((i + 1) != list.length) ? list[i + 1].length : -1, color1: color1),
+                        
                       ),
                     ],
                   ),
@@ -73,7 +76,10 @@ class CirclePainter extends CustomPainter {
 
   final int textSize;
   final int nextTextSize;
-  CirclePainter({required this.textSize, required this.nextTextSize});
+  final Color color1; // 여러 색상을 사용하기 위해 Color 리스트로 변경
+
+  CirclePainter({required this.textSize, required this.nextTextSize, required this.color1});
+
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -82,13 +88,13 @@ class CirclePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final borderPaint = Paint()
-      ..color = Color.fromRGBO(84, 162, 154, 1)
+      ..color = color1
       ..strokeWidth = 5.0
       ..style = PaintingStyle.stroke;
 
     final linePaint = Paint()
-      ..color = Color.fromRGBO(84, 162, 154, 1)
-      ..strokeWidth = 10.0
+      ..color = color1
+      ..strokeWidth = 14.0
       ..style = PaintingStyle.stroke;
 
     int plus = 0;
